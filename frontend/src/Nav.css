@@ -7,7 +7,12 @@
 }
 
 .nav-button {
-    margin: 10px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 0.3em;
+    margin: 0.3em;
 }
 
 a.nav-link, a.nav-link:hover, a.nav-link:focus, a.nav-link:active {
