@@ -3,7 +3,9 @@ import { Box } from '@mui/material';
 function NavButton(props) {
     return (
         <Box
-            sx={{ height: 40 }}
+            sx={{
+                backgroundColor: props.selected ? '#efefef' : '#ffffff'
+            }}
             className='nav-button'
             display='flex'
             flexDirection='row'

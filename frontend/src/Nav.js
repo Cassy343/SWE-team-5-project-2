@@ -1,9 +1,43 @@
-import { Paper, Stack } from '@mui/material';
+import { Box, Paper, Stack } from '@mui/material';
 import { Link, Outlet } from 'react-router-dom';
 import NavButton from './NavButton';
 import './Nav.css';
+import { useState } from 'react';
 
 function Nav(props) {
+    const [selectedLink, setSelectedLink] = useState(0);
+
+    const links = [
+        {
+            to: "/profile",
+            label: "Profile"
+        },
+        {
+            to: "/liked-songs",
+            label: "Liked Songs"
+        },
+        {
+            to: "/top-songs",
+            label: "Top Songs"
+        },
+        {
+            to: "/top-artists",
+            label: "Top Artists"
+        },
+        {
+            to: "/dms",
+            label: "DMs"
+        },
+        {
+            to: "/discover",
+            label: "Discover"
+        },
+        {
+            to: "/forums",
+            label: "Forums"
+        },
+    ];
+
     return (<>
         <Paper
             id='nav-bar'
@@ -15,27 +49,32 @@ function Nav(props) {
                     justifyContent='left'
                     id='nav-stack'
                 >
-                    <Link to="/profile" className='nav-link'>
-                        <NavButton>Profile</NavButton>
-                    </Link>
-                    <Link to="/liked-songs" className='nav-link'>
-                        <NavButton>Liked Songs</NavButton>
-                    </Link>
-                    <Link to="/top-songs" className='nav-link'>
-                        <NavButton>Top Songs</NavButton>
-                    </Link>
-                    <Link to="/top-artists" className='nav-link'>
-                        <NavButton>Top Artists</NavButton>
-                    </Link>
-                    <Link to="/dms" className='nav-link'>
-                        <NavButton>DMs</NavButton>
-                    </Link>
-                    <Link to="/discover" className='nav-link'>
-                        <NavButton>Discover</NavButton>
-                    </Link>
-                    <Link to="/forums" className='nav-link'>
-                        <NavButton>Forums</NavButton>
-                    </Link>
+                    {
+                        links.map((link, index) => <Box
+                            key={link.to}
+                            onClick={() => setSelectedLink(index)}
+                        >
+                            <Link
+                                to={link.to}
+                                className='nav-link'
+                            >
+                                <NavButton selected={index === selectedLink}>
+                                    {link.label}
+                                </NavButton>
+                            </Link>
+                        </Box>)
+                    }
+                    <Box
+                        onClick={() => {
+                            props.setSpotifyToken("");
+                            window.localStorage.removeItem("token");
+                            window.location.assign('http://localhost:3000/');
+                        }}
+                    >
+                        <NavButton selected={false}>
+                            Logout
+                        </NavButton>
+                    </Box>
                 </Stack>
             </nav>
         </Paper>

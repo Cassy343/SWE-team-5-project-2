@@ -10,19 +10,22 @@ import Forums from './forums/Forums';
 import Dms from './dms/Dms';
 import Nav from './Nav';
 import Posts from './forums/Posts';
+import { useEffect, useState } from 'react';
 
 function App() {
+    const [spotifyToken, setSpotifyToken] = useState("");
+
     return (<BrowserRouter
         className='App'
     >
         <Routes>
             <Route
                 path='/' // goes to login page
-                element={<Login />}
+                element={<Login spotifyToken={spotifyToken} setSpotifyToken={setSpotifyToken} />}
             />
             <Route
                 path='/'
-                element={<Nav />}
+                element={<Nav setSpotifyToken={setSpotifyToken} />}
             >
                 <Route
                     path='/profile'
