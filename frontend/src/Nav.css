@@ -15,6 +15,11 @@
     margin: 0.3em;
 }
 
+.nav-button:hover {
+    background-color: #efefef;
+    cursor: pointer;
+}
+
 a.nav-link, a.nav-link:hover, a.nav-link:focus, a.nav-link:active {
   text-decoration: none;
   color: inherit;

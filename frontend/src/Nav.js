@@ -64,6 +64,17 @@ function Nav(props) {
                             </Link>
                         </Box>)
                     }
+                    <Box
+                        onClick={() => {
+                            props.setSpotifyToken("");
+                            window.localStorage.removeItem("token");
+                            window.location.assign('http://localhost:3000/');
+                        }}
+                    >
+                        <NavButton selected={false}>
+                            Logout
+                        </NavButton>
+                    </Box>
                 </Stack>
             </nav>
         </Paper>
