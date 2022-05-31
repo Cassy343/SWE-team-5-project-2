@@ -14,11 +14,15 @@ function Forums(props) {
     const [newForumName, setNewForumName] = useState("");
     const [newImageLink, setNewImageLink] = useState("");
 
+    const createForum = (e) => {
+
+    }
+
     return (
         <div style={{ textAlign: 'center', marginLeft: '70px', marginRight: '70px' }}>
             <h1>FORUMS</h1>
             <Grid container spacing={4}>
-                <Grid item xs={3}><p></p></Grid>
+                <Grid item xs={2}><p></p></Grid>
                 <Grid item xs={2}><p><b>Create a new forum: </b></p></Grid>
                 <Grid item xs={2}>
                     <TextField fullWidth
@@ -38,8 +42,10 @@ function Forums(props) {
                     inputProps={{ defaultValue: null }}
                     />
                 </Grid>
-                <Grid item xs={1}>
-                    <Button color='success'>Create</Button>
+                <Grid item xs={2}>
+                    <Button fullWidth
+                    color='success'
+                    onClick={createForum}>Create</Button>
                 </Grid>
             </Grid>
             <br></br>
