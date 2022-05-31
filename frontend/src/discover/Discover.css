@@ -1,0 +1,15 @@
+.content-container {
+}
+.row {
+    display: flex;
+    height: 100%;
+}
+
+.left-panel {
+    flex: 2;
+    background-color: rgb(25, 20, 20);
+}
+
+.right-panel {
+    flex: 5;
+}
