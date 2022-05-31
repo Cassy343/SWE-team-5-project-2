@@ -9,6 +9,7 @@ import TopArtists from './top-artists/TopArtists';
 import Forums from './forums/Forums';
 import Dms from './dms/Dms';
 import Nav from './Nav';
+import Posts from './forums/Posts';
 import { useEffect, useState } from 'react';
 
 function App() {
@@ -50,6 +51,10 @@ function App() {
                     path='/forums'
                     element={<Forums />}
                 />
+                    <Route
+                        path='/forums/posts'
+                        element={<Posts />}
+                    />
                 <Route
                     path='/dms'
                     element={<Dms />}
