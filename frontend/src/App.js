@@ -13,7 +13,7 @@ import Posts from './forums/Posts';
 import { useEffect, useState } from 'react';
 
 function App() {
-    const [spotifyToken, setSpotifyToken] = useState("");
+    const [spotifyToken, setSpotifyToken] = useState(window.localStorage.getItem("token"));
 
     return (<BrowserRouter
         className='App'
@@ -29,7 +29,7 @@ function App() {
             >
                 <Route
                     path='/profile'
-                    element={<Profile />}
+                    element={<Profile spotifyToken={spotifyToken} />}
                 />
                 <Route
                     path='/discover'

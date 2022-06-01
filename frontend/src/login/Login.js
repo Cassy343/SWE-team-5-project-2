@@ -62,7 +62,13 @@ function Login(props) {
         <>
             <Button
                 onClick={() => {
-                    window.location.replace(`${AUTH_ENDPOINT}?client_id=${process.env.REACT_APP_spotifyClientId}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`);
+                    window.location.replace(
+                        `${AUTH_ENDPOINT}`
+                        + `?client_id=${process.env.REACT_APP_spotifyClientId}`
+                        + `&redirect_uri=${REDIRECT_URI}`
+                        + `&response_type=${RESPONSE_TYPE}`
+                        + `&scope=user-top-read`
+                    );
                 }}
             >
                 Login with Spotify
