@@ -6,8 +6,8 @@
 }
 
 .left-panel {
-    flex: 2;
-    background-color: rgb(25, 20, 20);
+    flex: 1.5;
+    background-color: 'white';
 }
 
 .right-panel {
