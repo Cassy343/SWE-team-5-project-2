@@ -1,12 +1,22 @@
 
 import { FormLabel, FormControl, FormGroup, FormControlLabel, Switch, styled } from "@mui/material";
+import axios from "axios"
+import { useState, useEffect } from "react";
+
 function Profile(props) {
+  const [privateProfile, setPrivateProfile] = useState([]);
+ useEffect(()=> {
+  axios.get(`profile?spotifyToken=${props.spotifyToken}`)
+    .then(res => { console.log(res)});
+
+ },[]);
     return (
     <>
         <div className = "App">
             <br></br>
             <h1>USERNAME</h1>
             <div>
+              <section id="sidebar">
                 <FormControl>
                     <FormLabel>
                         <FormGroup>
@@ -15,7 +25,7 @@ function Profile(props) {
                         </FormGroup>
                     </FormLabel>
                 </FormControl>
-
+                </section>
             </div>
 
         </div>
@@ -34,19 +44,7 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
         width: 16,
         height: 16,
       },
-      //before and after image icons
-    //   '&:before': {
-    //     backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-    //       theme.palette.getContrastText(theme.palette.primary.main),
-    //     )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
-    //     left: 12,
-    //   },
-    //   '&:after': {
-    //     backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-    //       theme.palette.getContrastText(theme.palette.primary.main),
-    //     )}" d="M19,13H5V11H19V13Z" /></svg>')`,
-    //     right: 12,
-    //   },
+     
     },
     '& .MuiSwitch-thumb': {
       boxShadow: 'none',
