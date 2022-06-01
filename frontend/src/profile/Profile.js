@@ -7,7 +7,6 @@ function Profile(props) {
   const [privateProfile, setPrivateProfile] = useState([]);
  useEffect(()=> {
   axios.get(`profile?spotifyToken=${props.spotifyToken}`)
-  .try()
     .then(res => { console.log(res)});
 
  },[]);
