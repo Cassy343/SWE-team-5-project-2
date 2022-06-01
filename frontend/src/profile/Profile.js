@@ -1,14 +1,16 @@
 
 import { FormLabel, FormControl, FormGroup, FormControlLabel, Switch, styled } from "@mui/material";
 import axios from "axios"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Profile(props) {
   const [privateProfile, setPrivateProfile] = useState([]);
-  axios.get('profile?spotifyToken=${props.spotifyToken}')
-    .then(res => { console.log(res.name)
-        
-    });
+ useEffect(()=> {
+  axios.get(`profile?spotifyToken=${props.spotifyToken}`)
+  .try()
+    .then(res => { console.log(res)});
+
+ },[]);
     return (
     <>
         <div className = "App">
