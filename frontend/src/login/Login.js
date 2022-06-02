@@ -16,7 +16,7 @@ function Login(props) {
     //     window.localStorage.removeItem("token")
     // }
 
-    const profileContext = useContext(ProfileContext);
+    const profile = useContext(ProfileContext);
 
     useEffect(() => {
         const hash = window.location.hash;
@@ -56,7 +56,7 @@ function Login(props) {
     //     ))
     // }
 
-    if (profileContext.spotifyToken) {
+    if (profile.spotifyToken) {
         window.location.replace(`${REDIRECT_URI}/profile`);
         return (<></>);
     }

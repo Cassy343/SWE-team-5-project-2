@@ -1,3 +1,4 @@
+import './message-board.css';
 import { Box, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import Message from "./Message";
@@ -5,14 +6,7 @@ import SendMessage from "./SendMessage";
 
 // props contains fetchAllMessages(), sendMessage(), editMessage()
 function MessageBoard(props) {
-    const [messages, setMessages] = useState([]);
-
-    useEffect(() => {
-        props.fetchAllMessages()
-            .then(msgs => {
-                setMessages(msgs.data)
-            });
-    }, []);
+    const [messages, setMessages] = useState([...props.messages]);
 
     const addMessage = (msg) => setMessages([...messages, msg]);
 
@@ -38,13 +32,11 @@ function MessageBoard(props) {
         >
             {messages.map(msg => <Message
                 key={msg.id}
-                user={props.user}
                 msg={msg}
                 updateContent={content => updateContent(msg.id, content)}
                 delete={() => deleteMessage(msg.id)}
             />)}
             <SendMessage
-                user={props.user}
                 addMessage={addMessage}
                 sendMessage={props.sendMessage}
             />

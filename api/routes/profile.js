@@ -10,6 +10,13 @@ const BASE_URL = 'https://api.spotify.com/v1';
 const displayNameCache = {};
 const tokenToSpotifyId = {};
 const spotifyIdToFirestoreId = {};
+const firestoreIdToSpotifyId = {};
+
+function sortByDate(messageA, messageB) {
+    return messageA.timeSent < messageB.timeSent
+        ? -1
+        : (messageA.timeSent > messageB.timeSent ? 1 : 0);
+}
 
 const getSpotifyProfileFromToken = async token => {
     if (tokenToSpotifyId[token] && displayNameCache[tokenToSpotifyId[token]]) {
@@ -72,6 +79,7 @@ const getFirestoreProfileFromSpotifyId = async id => {
 
         const dc = docs.docs[0];
         spotifyIdToFirestoreId[id] = dc.id;
+        firestoreIdToSpotifyId[dc.id] = id;
         return dc;
     }
 };
@@ -96,6 +104,17 @@ const getFirestoreIdFromQuery = async reqQuery => {
         return spotifyIdToFirestoreId[spotifyId];
     } else {
         return (await getFirestoreProfileFromSpotifyId(spotifyId)).id;
+    }
+};
+
+const getSpotifyIdFromFirestoreId = async firestoreId => {
+    if (firestoreIdToSpotifyId[firestoreId]) {
+        return firestoreIdToSpotifyId[firestoreId];
+    } else {
+        const id = (await getDoc(doc(db, 'users', firestoreId))).data().spotifyId;
+        firestoreIdToSpotifyId[firestoreId] = id;
+        spotifyIdToFirestoreId[id] = firestoreId;
+        return id;
     }
 };
 
@@ -162,12 +181,41 @@ router.put('/', (req, res) => {
 router.get('/dms', (req, res) => {
     getFirestoreIdFromQuery(req.query).then(firestoreId => {
         getDocs(collection(db, 'users', firestoreId, 'dms')).then(docs => {
-            res.send(docs.docs.map(dc => {
-                return { ...dc.data(), id: dc.id }
-            }));
+            Promise.all(docs.docs.map(async dc => {
+                const data = dc.data();
+                const authorSpotifyId = await getSpotifyIdFromFirestoreId(data.author.id);
+                console.log(data.author.id, authorSpotifyId);
+                const authorSpotify = await getSpotifyProfileFromId(req.query.spotifyToken, authorSpotifyId);
+                const ret = {
+                    ...data,
+                    id: dc.id,
+                    timeSent: new Date(data.timeSent),
+                    author: {
+                        name: authorSpotify.name,
+                        id: data.author.id
+                    }
+                };
+                return ret;
+            }))
+            .then(dms => res.send(dms.sort(sortByDate)));
         });
     })
     .catch(e => console.log(e));
+});
+
+router.get('/dms-to', (req, res) => {
+    const lookupDm = async () => {
+        const recipientFirestoreId = await getFirestoreIdFromQuery(req.query);
+        const authorFirestoreId = req.query.selfFirestoreId;
+        const dmQuery = query(
+            collection(db, 'users', recipientFirestoreId, 'dms'),
+            where('author', '==', doc(db, 'users', authorFirestoreId))
+        );
+        return (await getDocs(dmQuery)).docs;
+    };
+
+    lookupDm().then(docs => res.send(docs.map(dc => { return { ...dc.data(), id: dc.id }; })))
+        .catch(e => console.log(e));
 });
 
 router.post('/dms', (req, res) => {
@@ -182,7 +230,7 @@ router.post('/dms', (req, res) => {
     };
 
     addDm()
-        .then(dc => res.send(dc))
+        .then(dc => res.send({ id: dc.id }))
         .catch(e => console.log(e));
 });
 

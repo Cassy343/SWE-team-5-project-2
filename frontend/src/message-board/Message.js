@@ -2,8 +2,9 @@ import { Box, Button, IconButton, Modal, TextField, Typography } from "@mui/mate
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ReplyIcon from '@mui/icons-material/Reply';
-import { useState } from "react";
+import { useContext, useState } from "react";
 import EditMessage from "./EditMessage";
+import { ProfileContext } from "../Context";
 
 const modalStyle = {
     position: 'absolute',
@@ -51,6 +52,8 @@ function Message(props) {
     const [editing, setEditing] = useState(false);
     const [deleting, setDeleting] = useState(false);
 
+    const profile = useContext(ProfileContext);
+
     function editMessage(content) {
         setEditing(false);
 
@@ -80,7 +83,7 @@ function Message(props) {
             </Typography>
             {
                 (hovering && !editing) && <Actions
-                    isUsersMessage={msg.author.id === props.user.id}
+                    isUsersMessage={msg.author.id === profile.id}
                     setEditing={setEditing}
                     setDeleting={setDeleting}
                 />

@@ -12,8 +12,8 @@ const handleSend = (event, contentRef, props) => {
         return;
     }
 
-    props.sendMessage(props.user.id, content)
-        .then(msg => props.addMessage(msg.data));
+    props.sendMessage(content)
+        .then(msg => props.addMessage(msg));
 
     contentRef.current.value = '';
 };
