@@ -1,16 +1,18 @@
 
 import { FormLabel, FormControl, FormGroup, FormControlLabel, Switch, Box, styled, Grid, Card, Typography} from "@mui/material";
 import axios from "axios"
-import { useState, useEffect } from "react";
+import { ProfileContext } from "../Context"
+import { useState, useEffect, useContext } from "react";
 
 function Profile(props) {
   const testuname = "Javier Tarifa"
+  const profile = useContext(ProfileContext)
   const [privateProfile, setPrivateProfile] = useState({private: false});
   const [artist, setArtists] = useState([{name: "Imagine Dragons"},{name: "Ye"},{name: "Elton John"}]);
   const [song, setSongs] = useState([{title: "Enemy"}, {title: "Believer"}, {title: "Thunder"}]);
  useEffect(()=> {
- // axios.get(`profile?spotifyToken=${props.spotifyToken}`)
-   // .then(res => { console.log(res)});
+ // axios.get(`profile?spotifyToken=${window.localStorage.getItem("token")}`)
+ //   .then(res => { console.log()});
    // axios.get('localhost8000:profile')
  },[]);
     return (
