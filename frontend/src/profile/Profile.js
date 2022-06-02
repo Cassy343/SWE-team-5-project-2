@@ -9,15 +9,12 @@ function Profile(props) {
   const [song, setSongs] = useState([{title: "Enemy"}, {title: "Believer"}, {title: "Thunder"}]);
   const [privateProfile, setPrivateProfile] = useState({private: false});
   const profile = useContext(ProfileContext)
-  const testuname = "Javier Tarifa"
-  useEffect(()=> {
-  axios.get(`profile?spotifyToken=${props.spotifyToken}`)
-   // .then(res => { console.log(res)
-                  //setArtists(res.data)
-       //           console.log(profile.name)
+  
+  //useEffect(()=> {
+   // .then(res => { 
   //  });
 
-  },[]);
+ // },[]);
     return (
     <>
         <div className = "App">
