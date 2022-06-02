@@ -75,7 +75,7 @@ const getFirestoreProfileFromSpotifyId = async id => {
             collection(db, 'users'),
             where('spotifyId', '==', id)
         );
-            console.log(profileQuery.docs)
+           
         const docs = await getDocs(profileQuery);
         const dc = docs.docs[0];
         spotifyIdToFirestoreId[id] = dc.id;
