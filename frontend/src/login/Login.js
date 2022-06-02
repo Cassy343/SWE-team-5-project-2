@@ -63,7 +63,7 @@ function Login(props) {
         return (<></>);
     }
 
-    return (<>
+    return (<div id='login-container'>
         <Card
             id='button'
             onClick={() => {
@@ -80,7 +80,7 @@ function Login(props) {
         </Card>
         <div id='overlay'></div>
         <img src={Logo} alt='' id='logo' />
-    </>);
+    </div>);
 }
 
 export default Login;
