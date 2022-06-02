@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ProfileContext } from "../Context";
 
 const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
 const RESPONSE_TYPE = 'token';
@@ -15,6 +16,8 @@ function Login(props) {
     //     window.localStorage.removeItem("token")
     // }
 
+    const profile = useContext(ProfileContext);
+
     useEffect(() => {
         const hash = window.location.hash;
         let token = window.localStorage.getItem("token");
@@ -27,7 +30,7 @@ function Login(props) {
         }
 
         props.setSpotifyToken(token);
-    }, []);
+    }, [window.location]);
 
     // const searchArtists = async (e) => {
     //     e.preventDefault()
@@ -53,7 +56,7 @@ function Login(props) {
     //     ))
     // }
 
-    if (props.spotifyToken) {
+    if (profile.spotifyToken) {
         window.location.replace(`${REDIRECT_URI}/profile`);
         return (<></>);
     }
@@ -62,12 +65,17 @@ function Login(props) {
         <>
             <Button
                 onClick={() => {
-                    window.location.replace(`${AUTH_ENDPOINT}?client_id=${process.env.REACT_APP_spotifyClientId}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`);
+                    window.location.replace(
+                        `${AUTH_ENDPOINT}`
+                        + `?client_id=${process.env.REACT_APP_spotifyClientId}`
+                        + `&redirect_uri=${REDIRECT_URI}`
+                        + `&response_type=${RESPONSE_TYPE}`
+                        + `&scope=user-top-read%20user-library-read`
+                    );
                 }}
             >
                 Login with Spotify
             </Button>
-            <p>Token: {props.spotifyToken}</p>
         </>
         // <div className="App">
         //     <header className="App-header">

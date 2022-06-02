@@ -10,14 +10,46 @@ function Discover(props) {
         name: 'Ashwin Shankar',
         song: "It's a killa",
         artist: 'Glass Animals',
-        userId: '12345'
+        userId: '1235'
     }, 
     {
         name:'Spongebob Squarepants',
         song: 'Krusty Krab Pizza',
         artist: 'Squidward',
         userId: '12345'
-    }]) // each user will contain name, top artist, top song, 
+    },
+    {
+        name:'Spongebob Squarepants',
+        song: 'Krusty Krab Pizza',
+        artist: 'Squidward',
+        userId: '12345'
+    },
+    {
+        name:'Spongebob Squarepants',
+        song: 'Krusty Krab Pizza',
+        artist: 'Squidward',
+        userId: '12345'
+    },
+    {
+        name:'Spongebob Squarepants',
+        song: 'Krusty Krab Pizza',
+        artist: 'Squidward',
+        userId: '12345'
+    },
+    {
+        name:'Spongebob Squarepants',
+        song: 'Krusty Krab Pizza',
+        artist: 'Squidward',
+        userId: '12345'
+    },
+    {
+        name:'Spongebob Squarepants',
+        song: 'Krusty Krab Pizza',
+        artist: 'Squidward',
+        userId: '12345'
+    },
+
+]) // each user will contain name, top artist, top song, 
 
 
     return (<>
@@ -25,26 +57,28 @@ function Discover(props) {
             <div className="row">
                 <div className="left-panel box">
                     {users.map((user) => (
-                        <Card sx={{m: 2}} style={{backgroundColor: "rgb(30,215,96)", opacity: 0.9}}>
-                            <CardActionArea >
-                                <Typography variant="h3" color='black' textAlign='center' >{user.name}</Typography>
-                            </CardActionArea>
-                            <CardContent>
-                                <Typography color='grey' variant='h6'> Favorite Song: {user.song}</Typography>
+                        <div onClick = {() => setIdProfile(user.userId)}>
+                        <Card sx={{m: 2}} style={{backgroundColor: "grey", opacity: 0.9, boxShadow: "0 8px 10px rgba(0,0,0,0.3)",
+    "&:hover": {
+      boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}, padding: '5px', borderRadius: '2%'}}>
+                            <CardActionArea>
+                                <Typography variant="h5" color='black' textAlign='center' style={{fontWeight: "bold"}}>{user.name}</Typography>
+                            <CardContent style={{padding: '5px'}}>
+                                <Typography style={{width: "200px", float: "left"}}color='grey' variant='h6'> Favorite Song:<br></br> {user.song}</Typography>
                                 <Typography color='grey' variant='h6'> Favorite Artist: {user.artist} </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button  sx = {{border: 'black', "&:hover": {border: '1px solid black'}}}fullWidth ='true' variant='outlined' size='small' onClick = { () => {
-                                    setIdProfile(user.userId)
-                                    }}>
+                                <Button  fullWidth ='true' variant='text' size='small'>
                                         <Typography color ='black' variant='h7'>
                                             View Profile
                                         </Typography>
                                 </Button>
-                            </CardActions>
+                                </CardActions>
+                                </CardActionArea>
+                           
                                 
                         </Card>
-                    )
+                    </div>)
                     )}
                 </div>
                 <div className="right-panel box">

@@ -10,58 +10,91 @@ import Forums from './forums/Forums';
 import Dms from './dms/Dms';
 import Nav from './Nav';
 import Posts from './forums/Posts';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
+import { getProfileStaticContext, ProfileContext } from './Context';
+
+const profileReducer = (profile, action) => {
+    switch (action.type) {
+        case 'set-token': {
+            const newProfile = { ...profile, spotifyToken: action.payload.token };
+            if (newProfile.spotifyToken) {
+                getProfileStaticContext(newProfile.spotifyToken)
+                    .then(info => action.payload.updateProfile(info));
+            }
+            return newProfile;
+        }
+        case 'update-profile':
+            return { ...profile, ...action.payload };
+        default:
+            return profile;
+    }
+};
 
 function App() {
-    const [spotifyToken, setSpotifyToken] = useState(window.localStorage.getItem("token"));
+    // window.localStorage.getItem("token")
+    const [profile, dispatch] = useReducer(profileReducer, {});
 
-    return (<BrowserRouter
-        className='App'
-    >
-        <Routes>
-            <Route
-                path='/' // goes to login page
-                element={<Login spotifyToken={spotifyToken} setSpotifyToken={setSpotifyToken} />}
-            />
-            <Route
-                path='/'
-                element={<Nav setSpotifyToken={setSpotifyToken} />}
-            >
+    const updateProfile = info => dispatch({ type: 'update-profile', payload: info });
+    const setToken = token => {
+        dispatch({
+            type: 'set-token',
+            payload: { token: token, updateProfile: updateProfile }
+        });
+    };
+
+    useEffect(() => {
+        setToken(window.localStorage.getItem('token'));
+    }, [window.location]);
+
+    return (<ProfileContext.Provider value={profile}>
+        <BrowserRouter
+            className='App'
+        >
+            <Routes>
                 <Route
-                    path='/profile'
-                    element={<Profile />}
+                    path='/' // goes to login page
+                    element={<Login setSpotifyToken={setToken} />}
                 />
                 <Route
-                    path='/discover'
-                    element={<Discover />}
-                />
-                <Route
-                    path='/liked-songs'
-                    element={<LikedSongs />}
-                />
-                <Route
-                    path='/top-songs'
-                    element={<TopSongs />}
-                />
-                <Route
-                    path='/top-artists'
-                    element={<TopArtists />}
-                />
-                <Route
-                    path='/forums'
-                    element={<Forums />}
-                />
+                    path='/'
+                    element={<Nav setSpotifyToken={setToken} />}
+                >
                     <Route
-                        path='/forums/posts'
-                        element={<Posts />}
+                        path='/profile'
+                        element={<Profile spotifyToken={profile.spotifyToken} />}
                     />
-                <Route
-                    path='/dms'
-                    element={<Dms />}
-                />
-            </Route>
-        </Routes>
-    </BrowserRouter>);
+                    <Route
+                        path='/discover'
+                        element={<Discover />}
+                    />
+                    <Route
+                        path='/liked-songs'
+                        element={<LikedSongs />}
+                    />
+                    <Route
+                        path='/top-songs'
+                        element={<TopSongs />}
+                    />
+                    <Route
+                        path='/top-artists'
+                        element={<TopArtists />}
+                    />
+                    <Route
+                        path='/forums'
+                        element={<Forums />}
+                    />
+                        <Route
+                            path='/forums/posts'
+                            element={<Posts />}
+                        />
+                    <Route
+                        path='/dms'
+                        element={<Dms />}
+                    />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    </ProfileContext.Provider>);
 }
 
 export default App;
