@@ -45,8 +45,8 @@ function Forums(props) {
 
     return (<>
         <Helmet><title>Forums</title></Helmet>
-        <div style={{ textAlign: 'center', marginLeft: '70px', marginRight: '70px' }}>
-            <h1>FORUMS</h1>
+        <div style={{ textAlign: 'center', marginLeft: '70px', marginRight: '70px', }}>
+            <h1 style={{color:"rgb(30,215,96)"}}>FORUMS</h1>
             <Grid container spacing={4}>
                 <Grid item xs={2}><p></p></Grid>
                 <Grid item xs={2}><p><b>Create a new forum: </b></p></Grid>
@@ -70,7 +70,7 @@ function Forums(props) {
                 </Grid>
                 <Grid item xs={2}>
                     <Button fullWidth
-                    color='success'
+                    sx= {{color: "rgb(30,215,96)", }}
                     onClick={createForum}>Create</Button>
                 </Grid>
             </Grid>

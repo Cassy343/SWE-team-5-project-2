@@ -17,7 +17,7 @@ function LikedSongs(props) {
         .then(res => {setSongsData(res.data)
         }
         )
-      })
+      }, [])
 
       const buttonStyle = {
         padding: '5px', 
