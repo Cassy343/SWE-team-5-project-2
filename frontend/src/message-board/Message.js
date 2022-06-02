@@ -2,7 +2,7 @@ import { Box, Button, IconButton, Modal, TextField, Typography } from "@mui/mate
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ReplyIcon from '@mui/icons-material/Reply';
-import { useContext, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import EditMessage from "./EditMessage";
 import { ProfileContext } from "../Context";
 
@@ -17,7 +17,7 @@ const modalStyle = {
     borderRadius: '0.3em',
     p: 4
 };
-
+/*
 function Actions(props) {
     return (<Box className='message-actions'>
         {
@@ -45,9 +45,10 @@ function Actions(props) {
         }
     </Box>)
 }
+*/
 
 function Message(props) {
-    const msg = props.msg;
+    const [msg, setMsg] = useState([props.msg])
     const [hovering, setHovering] = useState(false);
     const [editing, setEditing] = useState(false);
     const [deleting, setDeleting] = useState(false);
@@ -73,29 +74,29 @@ function Message(props) {
             <Typography
                 color='text.secondary'
                 sx={{ fontWeight: 'bold' }}
-            >{msg.author.name}</Typography>
+            >props.getUserName(props.msg.author._key.path.segments[6])</Typography>
             <Box width='0.5em' />
             <Typography
                 color='text.secondary'
                 sx={{ fontSize: '0.85em' }}
             >
-                {new Date(msg.timeSent).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'})}
+                {new Date(props.msg.timeSent).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'})}
             </Typography>
-            {
+            {/*
                 (hovering && !editing) && <Actions
                     isUsersMessage={msg.author.id === profile.id}
                     setEditing={setEditing}
                     setDeleting={setDeleting}
                 />
-            }
+    */}
         </Box>
         {
             editing
             ? <EditMessage
-                content={msg.content}
+                content={props.msg.content}
                 edit={content => editMessage(content)}
             />
-            : <Typography className='message-text'>{msg.content}</Typography>
+            : <Typography className='message-text'>{props.msg.content}</Typography>
         }
         <Modal
             open={deleting}

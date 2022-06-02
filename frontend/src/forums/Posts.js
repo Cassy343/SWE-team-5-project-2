@@ -1,13 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
+import MessageBoard from "../message-board/MessageBoard";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import {ProfileContext} from '../Context'
+
 
 function Posts(props) {
     const [messages, setMessages] = useState([]);
     const [newContent, setNewContent] = useState("");
+    const profile = useContext(ProfileContext);
+    const [currentAuthor, setCurrentAuthor] = useState();
 
     const location = useLocation();
     const forumName = location.state?.name;
@@ -18,22 +23,14 @@ function Posts(props) {
         .then((res) => res.json())
         .then((text) => setMessages(text.result))
         .catch((err) => console.log(err))
+
+        axios.get(`/profile?spotifyToken=${profile.spotifyToken}`)
+            .then(res => {setCurrentAuthor(res.data.id)})
       }, [])
 
-    const getUserInfo = () => {
-
-    }
-
-    const createMessage = () => {
-        console.log(newContent)
-        axios.post(url, {
-            content: newContent,
-            author: "unknown",
-            timeSent: "unknown",
-            upvotes: 4
-        })
-        .then((res) => {setMessages([...messages, res.data])})
-        .catch((err) => console.log(err))
+    const getUserName = (ref) => {
+        axios.get(`/profile/name?firestoreId=${ref}&spotifyToken=${profile.spotifyToken}`)
+            .then(res => {return(res.data.name)})
     }
 
     const upvote = (index) => {
@@ -47,23 +44,34 @@ function Posts(props) {
         .then((res) => {setMessages([...messages, res.data])})
         .catch((err) => console.log(err))
     }
+    const deleteMessage = (id) => {
+        // empty return for now
+    }
+    const editMessage = (x, y) => {
+        // empty return for now
+    }
+
+    const sendMessage = (content) => {
+        console.log(currentAuthor);
+        axios.post(url, {
+            content: content,
+            author: currentAuthor,
+            timeSent: new Date(),
+            upvotes: 0
+        })
+        .then((res) => {return([res.data])})
+        .catch((err) => console.log(err))
+    }
 
     return (<>
-        <TextField
-            id="standard-basic" 
-            variant="standard"
-            helperText = "Message Content"
-            onChange={(e) => setNewContent(e.target.value)}
-            inputProps={{ defaultValue: null }}
-        />
-        <Button 
-            color='success'
-            onClick={createMessage}>Post</Button>
-        {messages.map((m, index) => 
-        <Grid>
-            <Grid item xs><p>{m.data.content}- m.data.author, {m.data.timeSent}, {m.data.upvotes} upvotes</p></Grid>
-            {/*<Grid item xs><Button onClick={upvote(index)}>Upvote</Button></Grid>*/}
-        </Grid>)}
+        {/*console.log(messages[0].data.author._key.path.segments[6])*/}
+        {<MessageBoard
+            messages={messages}
+            deleteMessage={deleteMessage}
+            editMessage={editMessage}
+            sendMessage={sendMessage}
+            getUserName={getUserName}
+        ></MessageBoard>}
     </>);
 }
 
