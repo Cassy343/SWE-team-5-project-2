@@ -67,6 +67,7 @@ const getSpotifyProfileFromId = async (token, id) => {
 };
 
 const getFirestoreProfileFromSpotifyId = async id => {
+
     if (spotifyIdToFirestoreId[id]) {
         return await getDoc(doc(db, 'users', spotifyIdToFirestoreId[id]));
     } else {
@@ -74,9 +75,8 @@ const getFirestoreProfileFromSpotifyId = async id => {
             collection(db, 'users'),
             where('spotifyId', '==', id)
         );
-
+            console.log(profileQuery.docs)
         const docs = await getDocs(profileQuery);
-
         const dc = docs.docs[0];
         spotifyIdToFirestoreId[id] = dc.id;
         firestoreIdToSpotifyId[dc.id] = id;
@@ -136,6 +136,31 @@ router.get('/', (req, res) => {
             });
         });
     });
+});
+
+router.get('/public', (req, res) => {
+    const pubQuery = query(
+        collection(db, 'users'),
+        where('private', '==', 'false')
+    );
+
+    getDocs(pubQuery).then(docs => {
+        Promise.all(
+            docs.docs.map(async dc => {
+                const data = dc.data();
+                const spotifyProfile = await getSpotifyProfileFromId(req.query.token, data.spotifyId)
+
+                return {
+                    ...data,
+                    name: spotifyProfile.name,
+                    id: dc.id
+                };
+            })
+        )
+        .then(users => res.send(users))
+        .catch(e => console.log(e));
+    })
+    .catch(e => console.log(e));
 });
 
 router.get('/top-songs', (req, res) => {
