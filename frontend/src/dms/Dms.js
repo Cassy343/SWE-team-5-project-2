@@ -1,4 +1,4 @@
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Button, Card, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useReducer, useState } from "react";
 import { ProfileContext } from "../Context";
@@ -15,6 +15,7 @@ function Dms(props) {
     const [dms, setDms] = useState({});
     const [channel, setChannelRaw] = useState(null);
     const profile = useContext(ProfileContext);
+    const [selectedDm, setSelectedDm] = useState(null);
 
     const setChannel = id => {
         axios.get(`profile/dms-to?firestoreId=${id}&selfFirestoreId=${profile.id}`).then(outgoing => {
@@ -25,6 +26,8 @@ function Dms(props) {
                 };
             })]
             .sort(sortByDate);
+
+            setSelectedDm(id);
 
             setChannelRaw({
                 id: id,
@@ -53,26 +56,31 @@ function Dms(props) {
         });
     }, []);
 
-    console.log(channel);
-
     return (<Box id='dms-container'>
-        <Card id='channel-select'>
-            {
-                Object.values(dms)
-                    .map(info => <Box
-                        onClick={() => setChannel(info.author.id)}
-                        sx={{
-                            width: '100%',
-                            height: '3em',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        <Typography variant='h5'>
-                            {info.author.name}
-                        </Typography>
-                    </Box>)
-            }
-        </Card>
+        <Box id='channel-select-container'>
+            <Card id='channel-select'>
+                <Stack
+                    direction='column'
+                    spacing={1}
+                    justifyContent='flex-start'
+                    alignItems='flex-start'
+                >
+                    {
+                        Object.values(dms).map(info => <Box
+                            onClick={() => setChannel(info.author.id)}
+                            className='dm-link'
+                            sx={{
+                                background: selectedDm === info.author.id ? '#efefef' : '#ffffff'
+                            }}
+                        >
+                            <Typography variant='h5'>
+                                {info.author.name}
+                            </Typography>
+                        </Box>)
+                    }
+                </Stack>
+            </Card>
+        </Box>
         {
             channel !== null && <MessageBoard
                 messages={channel.dms.msgs}

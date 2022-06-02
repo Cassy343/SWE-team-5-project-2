@@ -5,6 +5,13 @@ html {
 #channel-select {
     width: 20vw;
     border-radius: 0;
+    margin-left: 3em;
+    margin-top: 3em;
+    padding: 1em;
+}
+
+#channel-select-container {
+    padding-right: 3em;
 }
 
 #dms-container {
@@ -13,5 +20,21 @@ html {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: stretch;
+    align-items: flex-start;
+}
+
+.dm-link {
+    padding: 0.3em;
+    border-radius: 0.3em;
+    width: 97%;
+}
+
+.dm-link:hover {
+    background-color: #efefef;
+    cursor: pointer;
+}
+
+.dm-link:hover {
+    background-color: #efefef;
+    cursor: pointer;
 }
