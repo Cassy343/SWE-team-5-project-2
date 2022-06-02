@@ -44,7 +44,7 @@ function App() {
 
     useEffect(() => {
         setToken(window.localStorage.getItem('token'));
-    }, []);
+    }, [window.location]);
 
     return (<ProfileContext.Provider value={profile}>
         <BrowserRouter

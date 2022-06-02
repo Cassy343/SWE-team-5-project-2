@@ -5,11 +5,11 @@ import { useState, useEffect } from "react";
 
 function Profile(props) {
   const [privateProfile, setPrivateProfile] = useState([]);
- useEffect(()=> {
-  axios.get(`profile?spotifyToken=${props.spotifyToken}`)
-    .then(res => { console.log(res)});
+//  useEffect(()=> {
+//   axios.get(`profile?spotifyToken=${props.spotifyToken}`)
+//     .then(res => { console.log(res)});
 
- },[]);
+//  },[]);
     return (
     <>
         <div className = "App">
