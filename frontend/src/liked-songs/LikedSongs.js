@@ -60,13 +60,13 @@ function LikedSongs(props) {
                       component="img"
                       height='240'
                       width='200'
-                      image={song.album.images[1].url}
+                      image={song.track.album.images[1].url}
                       alt='Album Cover Not Found'
 
                       />
                   <Typography    sx={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '1', WebkitBoxOrient: 'vertical', }}
-display='inline' variant='h5'style={{fontWeight: 'bold', }}>{song.name}</Typography>
-                <Typography variant ='h6'>{song.album.artists[0].name}</Typography>     
+display='inline' variant='h5'style={{fontWeight: 'bold', }}>{song.track.name}</Typography>
+                <Typography variant ='h6'>{song.track.album.artists[0].name}</Typography>     
                 </CardContent>   
             </Card>
             </div>
