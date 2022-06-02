@@ -58,7 +58,7 @@ function Discover(props) {
                 <div className="left-panel box">
                     {users.map((user) => (
                         <div onClick = {() => setIdProfile(user.userId)}>
-                        <Card sx={{m: 2}} style={{backgroundColor: "rgb(30,215,96)", opacity: 0.9, boxShadow: "0 8px 10px rgba(0,0,0,0.3)",
+                        <Card sx={{m: 2}} style={{backgroundColor: "grey", opacity: 0.9, boxShadow: "0 8px 10px rgba(0,0,0,0.3)",
     "&:hover": {
       boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}, padding: '5px', borderRadius: '2%'}}>
                             <CardActionArea>
