@@ -134,8 +134,23 @@ router.get('/', (req, res) => {
                 name: info.name,
                 id: dc.id
             });
-        });
-    });
+        })
+        .catch(e => console.log(e));
+    })
+    .catch(e => console.log(e));
+});
+
+router.get('/name', (req, res) => {
+    const getName = async () => {
+        const spotifyId = await getSpotifyIdFromFirestoreId(req.query.firestoreId);
+        const profile = await getSpotifyProfileFromId(req.query.spotifyToken, spotifyId);
+        return profile;
+    };
+
+    getName().then(info => {
+        res.send(info);
+    })
+    .catch(e => console.log(e));
 });
 
 router.get('/public', (req, res) => {
