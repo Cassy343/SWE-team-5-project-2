@@ -179,7 +179,7 @@ router.get('/public', (req, res) => {
 });
 
 router.get('/top-songs', (req, res) => {
-    axios.get(`${BASE_URL}/me/top/tracks`, {
+    axios.get(`${BASE_URL}/me/top/tracks${req.query.timeRange ? `?time_range=${req.query.timeRange}` : ''}`, {
         headers: {
             'Authorization': `Bearer ${req.query.spotifyToken}`
         }
@@ -191,7 +191,7 @@ router.get('/top-songs', (req, res) => {
 });
 
 router.get('/top-artists', (req, res) => {
-    axios.get(`${BASE_URL}/me/top/artists`, {
+    axios.get(`${BASE_URL}/me/top/artists${req.query.timeRange ? `?time_range=${req.query.timeRange}` : ''}`, {
         headers: {
             'Authorization': `Bearer ${req.query.spotifyToken}`
         }
