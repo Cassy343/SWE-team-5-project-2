@@ -10,7 +10,7 @@ import {ProfileContext} from '../Context'
 
 function Posts(props) {
     const [messages, setMessages] = useState([]);
-    const [newContent, setNewContent] = useState("");
+    const [author, setAuthor] = useState("");
     const profile = useContext(ProfileContext);
     const [currentAuthor, setCurrentAuthor] = useState();
 
@@ -30,7 +30,7 @@ function Posts(props) {
 
     const getUserName = (ref) => {
         axios.get(`/profile/name?firestoreId=${ref}&spotifyToken=${profile.spotifyToken}`)
-            .then(res => {return(res.data.name)})
+            .then(res => {setAuthor(res.data.name)})
     }
 
     const upvote = (index) => {
@@ -63,16 +63,17 @@ function Posts(props) {
         .catch((err) => console.log(err))
     }
 
-    return (<>
-        {/*console.log(messages[0].data.author._key.path.segments[6])*/}
+    return (<div style={{alignItems: 'center'}}>
+        <h1 style={{textAlign: 'center', color:"rgb(30,215,96)"}}>{forumName}</h1>
         {<MessageBoard
             messages={messages}
             deleteMessage={deleteMessage}
             editMessage={editMessage}
             sendMessage={sendMessage}
             getUserName={getUserName}
+            author={author}
         ></MessageBoard>}
-    </>);
+    </div>);
 }
 
 export default Posts;
