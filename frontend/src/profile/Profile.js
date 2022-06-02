@@ -11,12 +11,8 @@ function Profile(props) {
   const profile = useContext(ProfileContext)
   const testuname = "Javier Tarifa"
   useEffect(()=> {
-  axios.get(`profile?spotifyToken=${props.spotifyToken}`)
-   // .then(res => { console.log(res)
-                  //setArtists(res.data)
-       //           console.log(profile.name)
-  //  });
-
+    console.log(props.spotifyToken);
+    axios.get(`profile?spotifyToken=${props.spotifyToken}`)
   },[]);
     return (
     <>
