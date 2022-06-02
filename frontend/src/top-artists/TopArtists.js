@@ -9,18 +9,17 @@ import { useContext } from "react";
 
 
 function TopArtists(props) {
-    const[artistsData, setArtistsData] = useState([])
+    const [artistsData, setArtistsData] = useState([])
+    const [timeRange, setTimeRange] = useState('long_term');
     const profile = useContext(ProfileContext)
     const user = profile.name
 
-    useEffect( () =>{
-        axios.get(`profile/top-artists?spotifyToken=${profile.spotifyToken}`)
-        .then(res => {setArtistsData(res.data)
-        }
-        )
-      })
+    useEffect(() => {
+        axios.get(`profile/top-artists?spotifyToken=${profile.spotifyToken}&timeRange=${timeRange}`)
+            .then(res => setArtistsData(res.data))
+    }, [timeRange]);
 
-      const buttonStyle = {
+    const buttonStyle = {
         padding: '5px', 
         paddingInline: '50px',
         flex: .4,
@@ -30,17 +29,17 @@ function TopArtists(props) {
         <Toolbar variant='dense' style={{padding: '0px', minHeight: '80px' }}>
             <Container maxWidth='2000px' style={{padding: 'none', display: "flex",}}>
             <Typography style={{textAlign: "center", padding: '10px', flex: 0.6, fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>{user}'s<br></br> Top Artists</Typography>
-            <Button size='medium'  style={buttonStyle} variant='text'>
+            <Button size='medium'  style={buttonStyle} variant='text' onClick={() => setTimeRange('long_term')}>
             <Typography color ='black' variant='h5'>
                                         All Time
                                     </Typography>
                 </Button>
-            <Button size='small' variant='text' style={buttonStyle}>
+            <Button size='small' variant='text' style={buttonStyle} onClick={() => setTimeRange('medium_term')}>
             <Typography color ='black' variant='h5'>
                                         Last Year
                                     </Typography>
             </Button>
-            <Button size='small' style={buttonStyle} variant='text' >
+            <Button size='small' style={buttonStyle} variant='text' onClick={() => setTimeRange('short_term')}>
             <Typography color ='black' variant='h5'>
                                         Last Month
                                     </Typography>
