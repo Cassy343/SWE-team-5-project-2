@@ -15,7 +15,6 @@ function LikedSongs(props) {
     useEffect( () =>{
         axios.get(`profile/liked-songs?spotifyToken=${profile.spotifyToken}`)
         .then(res => {setSongsData(res.data)
-            console.log(res)
         }
         )
       })
