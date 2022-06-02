@@ -67,8 +67,7 @@ const getSpotifyProfileFromId = async (token, id) => {
 };
 
 const getFirestoreProfileFromSpotifyId = async id => {
-    console.log(id)
-    console.log(spotifyIdToFirestoreId[id])
+
     if (spotifyIdToFirestoreId[id]) {
         return await getDoc(doc(db, 'users', spotifyIdToFirestoreId[id]));
     } else {
@@ -78,7 +77,6 @@ const getFirestoreProfileFromSpotifyId = async id => {
         );
             console.log(profileQuery.docs)
         const docs = await getDocs(profileQuery);
-            console.log(docs.docs)
         const dc = docs.docs[0];
         spotifyIdToFirestoreId[id] = dc.id;
         firestoreIdToSpotifyId[dc.id] = id;

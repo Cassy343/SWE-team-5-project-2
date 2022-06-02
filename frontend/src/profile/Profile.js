@@ -10,16 +10,22 @@ function Profile(props) {
   const [privateProfile, setPrivateProfile] = useState({private: false});
   const profile = useContext(ProfileContext)
   const testuname = "Javier Tarifa"
-//  useEffect(()=> {
-//   axios.get(`profile?spotifyToken=${props.spotifyToken}`)
-//     .then(res => { console.log(res)});
+  useEffect(()=> {
+  axios.get(`profile?spotifyToken=${props.spotifyToken}`)
+   // .then(res => { console.log(res)
+                  //setArtists(res.data)
+       //           console.log(profile.name)
+  //  });
 
-//  },[]);
+  },[]);
     return (
     <>
         <div className = "App">
             <br></br>
-            <Typography variant = "h3">{testuname}</Typography>
+            <Box>
+              <Typography variant = "h3">{profile.name}</Typography>
+            </Box>
+            
             <div>
               <Grid container spacing = {2}>
                 <Grid item>
