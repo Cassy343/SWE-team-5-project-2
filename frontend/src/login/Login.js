@@ -70,7 +70,7 @@ function Login(props) {
                         + `?client_id=${process.env.REACT_APP_spotifyClientId}`
                         + `&redirect_uri=${REDIRECT_URI}`
                         + `&response_type=${RESPONSE_TYPE}`
-                        + `&scope=user-top-read`
+                        + `&scope=user-top-read%20user-library-read`
                     );
                 }}
             >
