@@ -29,10 +29,14 @@ function MessageBoard(props) {
     return (<Box id='message-board-container'>
         <Stack
             direction='column'
-            alignItems='center'
+            alignItems='flex-start'
             justifyContent='flex-start'
             width='100%'
             spacing={1}
+            sx={{
+                overflowY: 'auto',
+                maxHeight: '80vh'
+            }}
         >
             {<SendMessage
                 addMessage={addMessage}
@@ -45,8 +49,12 @@ function MessageBoard(props) {
                 delete={() => deleteMessage(msg.id)}
                 getUserName = {props.getUserName}
             />)}
-            
+
         </Stack>
+        <SendMessage
+            addMessage={addMessage}
+            sendMessage={props.sendMessage}
+        />
     </Box>);
 }
 

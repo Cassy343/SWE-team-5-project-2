@@ -67,6 +67,7 @@ const getSpotifyProfileFromId = async (token, id) => {
 };
 
 const getFirestoreProfileFromSpotifyId = async id => {
+
     if (spotifyIdToFirestoreId[id]) {
         return await getDoc(doc(db, 'users', spotifyIdToFirestoreId[id]));
     } else {
@@ -74,9 +75,8 @@ const getFirestoreProfileFromSpotifyId = async id => {
             collection(db, 'users'),
             where('spotifyId', '==', id)
         );
-
+           
         const docs = await getDocs(profileQuery);
-
         const dc = docs.docs[0];
         spotifyIdToFirestoreId[id] = dc.id;
         firestoreIdToSpotifyId[dc.id] = id;
@@ -134,12 +134,52 @@ router.get('/', (req, res) => {
                 name: info.name,
                 id: dc.id
             });
-        });
-    });
+        })
+        .catch(e => console.log(e));
+    })
+    .catch(e => console.log(e));
+});
+
+router.get('/name', (req, res) => {
+    const getName = async () => {
+        const spotifyId = await getSpotifyIdFromFirestoreId(req.query.firestoreId);
+        const profile = await getSpotifyProfileFromId(req.query.spotifyToken, spotifyId);
+        return profile;
+    };
+
+    getName().then(info => {
+        res.send(info);
+    })
+    .catch(e => console.log(e));
+});
+
+router.get('/public', (req, res) => {
+    const pubQuery = query(
+        collection(db, 'users'),
+        where('private', '==', 'false')
+    );
+
+    getDocs(pubQuery).then(docs => {
+        Promise.all(
+            docs.docs.map(async dc => {
+                const data = dc.data();
+                const spotifyProfile = await getSpotifyProfileFromId(req.query.token, data.spotifyId)
+
+                return {
+                    ...data,
+                    name: spotifyProfile.name,
+                    id: dc.id
+                };
+            })
+        )
+        .then(users => res.send(users))
+        .catch(e => console.log(e));
+    })
+    .catch(e => console.log(e));
 });
 
 router.get('/top-songs', (req, res) => {
-    axios.get(`${BASE_URL}/me/top/tracks`, {
+    axios.get(`${BASE_URL}/me/top/tracks${req.query.timeRange ? `?time_range=${req.query.timeRange}` : ''}`, {
         headers: {
             'Authorization': `Bearer ${req.query.spotifyToken}`
         }
@@ -151,7 +191,7 @@ router.get('/top-songs', (req, res) => {
 });
 
 router.get('/top-artists', (req, res) => {
-    axios.get(`${BASE_URL}/me/top/artists`, {
+    axios.get(`${BASE_URL}/me/top/artists${req.query.timeRange ? `?time_range=${req.query.timeRange}` : ''}`, {
         headers: {
             'Authorization': `Bearer ${req.query.spotifyToken}`
         }
@@ -175,7 +215,7 @@ router.get('/liked-songs', (req, res) => {
 });
 
 router.put('/', (req, res) => {
-    updateDoc(doc(db, 'profile', req.query.firestoreId), req.body);
+    updateDoc(doc(db, 'users', req.query.firestoreId), req.body);
 });
 
 router.get('/dms', (req, res) => {

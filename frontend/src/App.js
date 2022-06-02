@@ -10,12 +10,14 @@ import Forums from './forums/Forums';
 import Dms from './dms/Dms';
 import Nav from './Nav';
 import Posts from './forums/Posts';
+import PublicProfile from './discover/PublicProfile'
 import { useEffect, useReducer, useState } from 'react';
 import { getProfileStaticContext, ProfileContext } from './Context';
 
 const profileReducer = (profile, action) => {
     switch (action.type) {
         case 'set-token': {
+            console.log(action.payload.token);
             const newProfile = { ...profile, spotifyToken: action.payload.token };
             if (newProfile.spotifyToken) {
                 getProfileStaticContext(newProfile.spotifyToken)
@@ -44,7 +46,7 @@ function App() {
 
     useEffect(() => {
         setToken(window.localStorage.getItem('token'));
-    }, [window.location]);
+    }, []);
 
     return (<ProfileContext.Provider value={profile}>
         <BrowserRouter
@@ -61,12 +63,16 @@ function App() {
                 >
                     <Route
                         path='/profile'
-                        element={<Profile spotifyToken={profile.spotifyToken} />}
+                        element={profile.spotifyToken && <Profile spotifyToken={profile.spotifyToken} />}
                     />
                     <Route
                         path='/discover'
                         element={<Discover />}
                     />
+                        <Route
+                        path='/discover/publicprofile' 
+                        element = {<PublicProfile/>}         
+                        />  
                     <Route
                         path='/liked-songs'
                         element={<LikedSongs />}
