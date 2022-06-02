@@ -1,0 +1,57 @@
+html {
+    background: #efefef;
+    overflow: hidden;
+}
+
+#overlay {
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    background-color: rgba(99, 99, 99, 0);
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    animation: overlay-darken 2.5s forwards;
+    animation-delay: 1.5s;
+}
+
+@keyframes overlay-darken {
+    from { background-color: rgba(99, 99, 99, 0); }
+    to { background-color: rgba(99, 99, 99, 0.7); }
+}
+
+#button {
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    left: 50%;
+    top: -30%;
+    transform: translate(-50%, -50%);
+    animation: fly-in-top 1s forwards;
+    animation-delay: 1s;
+    z-index: 2;
+    background-color: #efefef;
+    padding: 2em;
+    border-radius: 2em;
+    cursor: pointer;
+}
+
+@keyframes fly-in-top {
+    from { top: -30%; }
+    to { top: 50%; }
+}
+
+#logo {
+    position: absolute;
+    left: 50%;
+    top: 180%;
+    transform: translate(-50%, -50%);
+    animation: fly-in-bottom 1s forwards;
+    animation-delay: 1s;
+    z-index: 0;
+}
+
+@keyframes fly-in-bottom {
+    from { top: 180%; }
+    to { top: 50%; }
+}
