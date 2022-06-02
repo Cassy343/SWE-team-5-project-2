@@ -67,35 +67,35 @@ function App() {
                     />
                     <Route
                         path='/discover'
-                        element={<Discover />}
+                        element={profile.spotifyToken && <Discover />}
                     />
-                        <Route
+                    <Route
                         path='/discover/publicprofile' 
-                        element = {<PublicProfile/>}         
-                        />  
+                        element = {profile.spotifyToken && <PublicProfile/>}         
+                    />  
                     <Route
                         path='/liked-songs'
-                        element={<LikedSongs />}
+                        element={profile.spotifyToken && <LikedSongs />}
                     />
                     <Route
                         path='/top-songs'
-                        element={<TopSongs />}
+                        element={profile.spotifyToken && <TopSongs />}
                     />
                     <Route
                         path='/top-artists'
-                        element={<TopArtists />}
+                        element={profile.spotifyToken && <TopArtists />}
                     />
                     <Route
                         path='/forums'
-                        element={<Forums />}
+                        element={profile.spotifyToken && <Forums />}
                     />
-                        <Route
-                            path='/forums/posts'
-                            element={<Posts />}
-                        />
+                    <Route
+                        path='/forums/posts'
+                        element={profile.spotifyToken && <Posts />}
+                    />
                     <Route
                         path='/dms'
-                        element={<Dms />}
+                        element={profile.spotifyToken && <Dms />}
                     />
                 </Route>
             </Routes>
