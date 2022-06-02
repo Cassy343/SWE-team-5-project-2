@@ -10,6 +10,7 @@ import Forums from './forums/Forums';
 import Dms from './dms/Dms';
 import Nav from './Nav';
 import Posts from './forums/Posts';
+import PublicProfile from './discover/PublicProfile'
 import { useEffect, useReducer, useState } from 'react';
 import { getProfileStaticContext, ProfileContext } from './Context';
 
@@ -67,6 +68,10 @@ function App() {
                         path='/discover'
                         element={<Discover />}
                     />
+                        <Route
+                        path='/discover/publicprofile' 
+                        element = {<PublicProfile/>}         
+                        />  
                     <Route
                         path='/liked-songs'
                         element={<LikedSongs />}
