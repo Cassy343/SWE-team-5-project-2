@@ -6,10 +6,13 @@ import SendMessage from "./SendMessage";
 
 // props contains fetchAllMessages(), sendMessage(), editMessage()
 function MessageBoard(props) {
-    const [messages, setMessages] = useState([...props.messages]);
-    console.log(messages);
+    const [messages, setMessages] = useState(props.messages);
 
-    const addMessage = (msg) => setMessages([...messages, msg]);
+    useEffect(() => {
+        setMessages(props.messages);
+      }, [])
+
+    const addMessage = (msg) => setMessages([...props.messages, msg]);
 
     const deleteMessage = (id) => {
         setMessages(messages.filter(msg => msg.id !== id));
@@ -35,12 +38,18 @@ function MessageBoard(props) {
                 maxHeight: '80vh'
             }}
         >
-            {messages.map(msg => <Message
+            {<SendMessage
+                addMessage={addMessage}
+                sendMessage={props.sendMessage}
+            />}
+            {props.messages.map(msg => <Message
                 key={msg.id}
-                msg={msg}
+                msg={msg.data}
                 updateContent={content => updateContent(msg.id, content)}
                 delete={() => deleteMessage(msg.id)}
+                getUserName = {props.getUserName}
             />)}
+
         </Stack>
         <SendMessage
             addMessage={addMessage}
