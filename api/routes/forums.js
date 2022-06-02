@@ -37,9 +37,9 @@ router.get('/messages', async (req, res, next) => {
 });
 
 router.post('/messages', async (req, res, next) => {
-    console.log("does this work")
+    console.log(req.body.author)
     const message = {
-        author: req.body.author,
+        author: doc(db, 'users/' + req.body.author),
         content: req.body.content,
         timeSent: req.body.timeSent,
         upvotes: req.body.upvotes

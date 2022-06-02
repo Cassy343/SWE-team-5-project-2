@@ -10,6 +10,7 @@ import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import {Helmet} from 'react-helmet';
 
 function Forums(props) {
 
@@ -42,7 +43,8 @@ function Forums(props) {
         
     }
 
-    return (
+    return (<>
+        <Helmet><title>Forums</title></Helmet>
         <div style={{ textAlign: 'center', marginLeft: '70px', marginRight: '70px' }}>
             <h1>FORUMS</h1>
             <Grid container spacing={4}>
@@ -102,7 +104,7 @@ function Forums(props) {
                 )}
             </Grid>
         </div>
-    );
+    </>);
 }
 
 export default Forums;

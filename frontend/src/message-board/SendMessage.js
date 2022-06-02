@@ -18,6 +18,7 @@ const handleSend = (event, contentRef, props) => {
     contentRef.current.value = '';
 };
 
+// put message in database and return message body
 const SendMessage = (props) => {
     const contentRef = useRef();
 
@@ -25,7 +26,7 @@ const SendMessage = (props) => {
         <TextField
             inputRef={contentRef}
             onKeyDown={event => handleSend(event, contentRef, props)}
-            placeholder='Type + press enter to send a message'
+            placeholder='Type + press enter to add a post'
             sx={{ width: '100%' }}
         />
     </Box>)
