@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import {Link} from "react-router-dom";
+import axios from "axios";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -11,11 +13,33 @@ import Button from '@mui/material/Button';
 
 function Forums(props) {
 
+    const baseURL = 'http://localhost:8000';
+
     const [newForumName, setNewForumName] = useState("");
-    const [newImageLink, setNewImageLink] = useState("");
+    const [newImageLink, setNewImageLink] = useState("https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/768px-Spotify_logo_without_text.svg.png");
+    const [forums, setForums] = useState([]);
+    
 
-    const createForum = (e) => {
+    useEffect(() => {
+        console.log("reloading")
+        fetch("http://localhost:8000/forums/")
+        .then((res) => res.json())
+        .then((text) => setForums(text.result))
+        .catch((err) => console.log(err))
+      }, [])
 
+    const createForum = () => {
+        axios.post("http://localhost:8000/forums/", {
+            name: newForumName,
+            imageLink: newImageLink
+        })
+        .then((res) => {setForums([...forums, res.data])})
+        .catch((err) => console.log(err))
+
+    }
+
+    const getForumName = () => {
+        
     }
 
     return (
@@ -37,7 +61,7 @@ function Forums(props) {
                     <TextField fullWidth
                     id="standard-basic" 
                     variant="standard"
-                    helperText = "Image Link"
+                    helperText = "Cover Image Link"
                     onChange={(e) => setNewImageLink(e.target.value)}
                     inputProps={{ defaultValue: null }}
                     />
@@ -51,26 +75,32 @@ function Forums(props) {
             <br></br>
             <br></br>
             <br></br>
-            <Box>
-                <Card sx={{ maxWidth: 200}}>
-                <CardActionArea href="forums/posts">
-                    <CardMedia
-                    component="img"
-                    height="140"
-                    alt="spotify logo"
-                    image='https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/768px-Spotify_logo_without_text.svg.png'
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                        What's your favorite artist?
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                        10 posts
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                </Card>
-            </Box>
+            <Grid container spacing = {1}>
+                {forums.map((f) => 
+                <Grid item xs ={2}>
+                <Box>
+                    <Card sx={{ maxWidth: 200}}>
+                    <CardActionArea component={Link} to="/forums/posts" state={{ name: f.name}} >
+                        <CardMedia
+                        component="img"
+                        height="140"
+                        alt="Cover Image"
+                        image={f.imageLink}
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="div">
+                            {f.name}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                            10 posts
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                    </Card>
+                </Box>
+                </Grid>
+                )}
+            </Grid>
         </div>
     );
 }
