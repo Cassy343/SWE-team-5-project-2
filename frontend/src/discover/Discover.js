@@ -18,13 +18,12 @@ function Discover(props) {
         song: {name: '4 The People', img: 'https://i.scdn.co/image/ab67616d00001e02108a66d13846ca9a2061f2d2' },
         artist: {name: 'Lil Uzi Vert', img:'https://i.scdn.co/image/ab67616100005174879835ea4e3a0f0b8cf1c7b4' },
         userId: '1235'
-    }, 
-]) // each user will contain name, top artist, top song, 
+    }]) // each user will contain name, top artist, top song, 
 
-// useEffect(() => {
-//     axios.get(`profile/public?spotifyToken=${profile.spotifyToken}`)
-//     .then(res => )
-// })
+    useEffect(() => {
+        axios.get(`profile/public?spotifyToken=${profile.spotifyToken}`)
+        .then(res => console.log(res.data))
+    });
 
 
 

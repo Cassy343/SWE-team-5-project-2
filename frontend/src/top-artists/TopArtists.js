@@ -9,16 +9,23 @@ import { useContext } from "react";
 
 
 function TopArtists(props) {
-    const[artistsData, setArtistsData] = useState([])
+    const [artistsData, setArtistsData] = useState([])
+    const [timeRange, setTimeRange] = useState('long_term');
+    const [profileArtists, setProfileArtists] = useState([]);
     const profile = useContext(ProfileContext)
     const user = profile.name
 
-    useEffect( () =>{
-        axios.get(`profile/top-artists?spotifyToken=${profile.spotifyToken}`)
-        .then(res => {setArtistsData(res.data)
+    useEffect(() => {
+        const update = async () => {
+            const topRes = await axios.get(`profile/top-artists?spotifyToken=${profile.spotifyToken}&timeRange=${timeRange}`)
+            const displayRes = await axios.get(`profile?spotifyToken=${profile.spotifyToken}`);
+            setProfileArtists(displayRes.data.profileArtists);
+            setArtistsData(topRes.data)
+            console.log(topRes.data)
         }
-        )
-      }, [])
+
+        update();
+    }, [timeRange]);
 
       const buttonStyle = {
         padding: '5px', 
@@ -49,13 +56,34 @@ function TopArtists(props) {
         </Toolbar>
         <Divider ></Divider>
         <Container maxWidth='false' sx={{m: 2}} style={{ padding: '0px', overflow: 'auto'}}>
-        {artistsData.map((artist) =>  (
-            <div onClick={() => (
-                window.open(artist.external_urls.spotify)
-            )}>
-            <Card variant="elevation" sx={{m: 1.8}} style={{width: '325px', height: '325px', float: 'left' , padding: '10px', backgroundColor: "SlateGrey", boxShadow: "0 12px 20px rgba(0,0,0,0.3)",
-            "&:hover": {
-              boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}}}>
+        {artistsData.map((artist) =>  {
+            const onProfile = profileArtists.filter(sid => artist.id === sid).length > 0;
+            // <div onClick={() => (
+            //     window.open(artist.external_urls.spotify)
+            // )}>
+            return(
+            <Card variant="elevation" 
+                sx={{m: 1.8}}
+                onClick={() => {
+                    if (!onProfile) {
+                        const newArtistSongs = [...profileArtists, artist.id];
+                        axios.put(`profile?firestoreId=${profile.id}`, {
+                            profileArtists: newArtistSongs
+                        });
+                        setProfileArtists(newArtistSongs);
+                    }
+                }}           
+                style={{
+                    width: '325px', 
+                    height: '325px', 
+                    float: 'left' , 
+                    padding: '10px', 
+                    backgroundColor: "SlateGrey", 
+                    boxShadow: "0 12px 20px rgba(0,0,0,0.3)",
+                    backgroundColor: onProfile ? 'rgb(30,215,96)' : "SlateGrey",
+                    cursor: onProfile ? 'auto' : 'pointer',
+                    "&:hover": {
+                    boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}}}>
                   <CardContent>
                       <CardMedia
                       component="img"
@@ -70,8 +98,9 @@ display='inline' variant='h5'style={{fontWeight: 'bold', }}>{artist.name}</Typog
                 <Typography variant ='h6'>Followers: {artist.followers.total}</Typography>     
                 </CardContent>   
             </Card>
-            </div>
-        ))}
+            // </div>
+            );
+})}
         </Container>
     </div>);
 }

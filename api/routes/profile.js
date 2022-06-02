@@ -156,19 +156,47 @@ router.get('/name', (req, res) => {
 router.get('/public', (req, res) => {
     const pubQuery = query(
         collection(db, 'users'),
-        where('private', '==', 'false')
+        where('private', '==', false)
     );
 
     getDocs(pubQuery).then(docs => {
         Promise.all(
             docs.docs.map(async dc => {
                 const data = dc.data();
-                const spotifyProfile = await getSpotifyProfileFromId(req.query.token, data.spotifyId)
+                const spotifyProfile = (await axios.get(`${BASE_URL}/users/${data.spotifyId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${req.query.spotifyToken}`
+                    }
+                })).data;
+
+                const topTrack = data.profileSongs && data.profileSongs[0]
+                ? (await axios.get(`${BASE_URL}/tracks/${data.profileSongs[0]}`, {
+                    headers: {
+                        'Authorization': `Bearer ${req.query.spotifyToken}`
+                    }
+                })).data.album
+                : null;
+                const topArtist = data.profileArtists && data.profileArtists[0]
+                ? (await axios.get(`${BASE_URL}/artists/${data.profileArtists[0]}`, {
+                    headers: {
+                        'Authorization': `Bearer ${req.query.spotifyToken}`
+                    }
+                })).data
+                : null;
 
                 return {
                     ...data,
-                    name: spotifyProfile.name,
-                    id: dc.id
+                    name: spotifyProfile.display_name,
+                    id: dc.id,
+                    pfp: spotifyProfile.images[0],
+                    topTrack: topTrack ? {
+                        image: topTrack.images[0],
+                        name: topTrack.name
+                    } : null,
+                    topArtist: topArtist ? {
+                        image: topArtist.images[0],
+                        name: topArtist.name
+                    } : null
                 };
             })
         )
