@@ -7,6 +7,7 @@ import SendMessage from "./SendMessage";
 // props contains fetchAllMessages(), sendMessage(), editMessage()
 function MessageBoard(props) {
     const [messages, setMessages] = useState([...props.messages]);
+    console.log(messages);
 
     const addMessage = (msg) => setMessages([...messages, msg]);
 

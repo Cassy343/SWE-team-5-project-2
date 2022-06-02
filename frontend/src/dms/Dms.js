@@ -1,8 +1,9 @@
-import { Button } from "@mui/material";
+import { Box, Button, Card, Typography } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useReducer, useState } from "react";
 import { ProfileContext } from "../Context";
 import MessageBoard from "../message-board/MessageBoard";
+import './dms.css';
 
 const sortByDate = (messageA, messageB) => {
     return messageA.timeSent < messageB.timeSent
@@ -17,7 +18,7 @@ function Dms(props) {
 
     const setChannel = id => {
         axios.get(`profile/dms-to?firestoreId=${id}&selfFirestoreId=${profile.id}`).then(outgoing => {
-            const msgs = [...(dms[id] ? dms[id] : []), ...outgoing.data.map(msg => {
+            const msgs = [...(dms[id].msgs ? dms[id].msgs : []), ...outgoing.data.map(msg => {
                 return {
                     ...msg,
                     author: { ...profile }
@@ -27,7 +28,10 @@ function Dms(props) {
 
             setChannelRaw({
                 id: id,
-                messages: msgs
+                dms: {
+                    author: dms[id].author,
+                    msgs: msgs
+                }
             });
         });
     };
@@ -37,22 +41,41 @@ function Dms(props) {
             const newDms = {};
             res.data.forEach(msg => {
                 if (!newDms[msg.author.id]) {
-                    newDms[msg.author.id] = [];
+                    newDms[msg.author.id] = {
+                        author: msg.author,
+                        msgs: []
+                    };
                 }
 
-                newDms[msg.author.id].push(msg);
+                newDms[msg.author.id].msgs.push(msg);
             });
             setDms(newDms);
         });
     }, []);
 
-    // console.log(channel);
+    console.log(channel);
 
-    return (<>
+    return (<Box id='dms-container'>
+        <Card id='channel-select'>
+            {
+                Object.values(dms)
+                    .map(info => <Box
+                        onClick={() => setChannel(info.author.id)}
+                        sx={{
+                            width: '100%',
+                            height: '3em',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        <Typography variant='h5'>
+                            {info.author.name}
+                        </Typography>
+                    </Box>)
+            }
+        </Card>
         {
-            channel
-            ? <MessageBoard
-                messages={channel.messages}
+            channel !== null && <MessageBoard
+                messages={channel.dms.msgs}
                 sendMessage={async content => {
                     const currentTime = new Date();
 
@@ -77,13 +100,8 @@ function Dms(props) {
                 editMessage={() => {}}
                 deleteMessage={() => {}}
             />
-            : <Button
-                onClick={() => setChannel('vSddlkOyb82o9otUdo3q')}
-            >
-                Load
-            </Button>
         }
-    </>);
+    </Box>);
 }
 
 export default Dms;
