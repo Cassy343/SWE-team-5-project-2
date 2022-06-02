@@ -215,7 +215,7 @@ router.get('/liked-songs', (req, res) => {
 });
 
 router.put('/', (req, res) => {
-    updateDoc(doc(db, 'profile', req.query.firestoreId), req.body);
+    updateDoc(doc(db, 'users', req.query.firestoreId), req.body);
 });
 
 router.get('/dms', (req, res) => {
