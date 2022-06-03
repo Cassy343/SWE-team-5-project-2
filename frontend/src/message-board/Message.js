@@ -74,7 +74,7 @@ function Message(props) {
             <Typography
                 color='text.secondary'
                 sx={{ fontWeight: 'bold' }}
-            >{props.getUserName(props.msg.author._key.path.segments[6])}{props.author}</Typography>
+            >{props.msg.author.name}</Typography>
             <Box width='0.5em' />
             <Typography
                 color='text.secondary'

@@ -30,17 +30,17 @@ function LikedSongs(props) {
             <Container maxWidth='2000px' style={{padding: 'none', display: "flex",}}>
             <Typography style={{textAlign: "center", padding: '10px', flex: 0.6, fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>{user}'s<br></br> Liked Songs</Typography>
             <Button size='medium'  style={buttonStyle} variant='text'>
-            <Typography color ='black' variant='h5'>
+            <Typography color ='black' variant='h5' hidden='true'>
                                         All Time
                                     </Typography>
-                </Button>
+            </Button>
             <Button size='small' variant='text' style={buttonStyle}>
-            <Typography color ='black' variant='h5'>
+            <Typography color ='black' variant='h5' hidden='true'>
                                         Last Year
                                     </Typography>
             </Button>
             <Button size='small' style={buttonStyle} variant='text' >
-            <Typography color ='black' variant='h5'>
+            <Typography color ='black' variant='h5' hidden='true'>
                                         Last Month
                                     </Typography>
             </Button>

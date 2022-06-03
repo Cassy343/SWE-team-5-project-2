@@ -10,7 +10,7 @@ function MessageBoard(props) {
 
     useEffect(() => {
         setMessages(props.messages);
-      }, [])
+    }, [])
 
     const addMessage = (msg) => setMessages([...props.messages, msg]);
 
@@ -29,7 +29,7 @@ function MessageBoard(props) {
     return (<Box id='message-board-container'>
         <Stack
             direction='column'
-            alignItems='center'
+            alignItems='flex-start'
             justifyContent='flex-start'
             width='100%'
             spacing={1}
@@ -38,22 +38,20 @@ function MessageBoard(props) {
                 maxHeight: '80vh'
             }}
         >
-            {props.messages.map(msg => <Message
+            {messages.map(msg => {
+            return <Message
                 key={msg.id}
-                msg={msg.data}
+                msg={msg}
                 updateContent={content => updateContent(msg.id, content)}
                 delete={() => deleteMessage(msg.id)}
                 getUserName = {props.getUserName}
                 author = {props.author}
-            />)}
-
-        
-        
+            />})}
+        </Stack>
         <SendMessage
             addMessage={addMessage}
             sendMessage={props.sendMessage}
         />
-        </Stack>
     </Box>);
 }
 
