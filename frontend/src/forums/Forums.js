@@ -12,6 +12,7 @@ import { CardActionArea } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {Helmet} from 'react-helmet';
+import './forums.css';
 
 function Forums(props) {
     const [newForumName, setNewForumName] = useState("");
