@@ -8,11 +8,9 @@ import SendMessage from "./SendMessage";
 function MessageBoard(props) {
     const [messages, setMessages] = useState([...props.messages]);
 
-    console.log('sm', props.sendMessage);
-
-    // useEffect(() => {
-    //     setMessages([...props.messages]);
-    // }, [])
+    useEffect(() => {
+        setMessages([...props.messages]);
+    }, [props.messages])
 
     const addMessage = (msg) => setMessages([...props.messages, msg]);
 

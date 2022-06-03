@@ -21,7 +21,6 @@ const handleSend = (event, contentRef, props) => {
 // put message in database and return message body
 const SendMessage = (props) => {
     const contentRef = useRef();
-    console.log('sm', props.sendMessage);
 
     return (<Box id='send-message-container'>
         <TextField
