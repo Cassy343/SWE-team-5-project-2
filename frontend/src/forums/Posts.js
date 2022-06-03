@@ -9,7 +9,7 @@ import {ProfileContext} from '../Context'
 
 
 function Posts(props) {
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState(null);
     const [author, setAuthor] = useState("");
     const profile = useContext(ProfileContext);
     const [currentAuthor, setCurrentAuthor] = useState();
@@ -23,14 +23,24 @@ function Posts(props) {
         fetch(url)
         .then((res) => res.json())
         .then((text) => {
-            console.log(text);
-            setMessages(text.result)
+            const newMessages = text.result.map(m => {
+                return {
+                    id: m.id,
+                    author: m.data.author,
+                    content: m.data.content,
+                    timeSent: m.data.timeSent,
+                    upvotes: m.data.upvotes
+                };
+            })
+            .sort(sortByDate);
+            setMessages(newMessages);
+            console.log(newMessages);
         })
         .catch((err) => console.log(err))
 
         axios.get(`/profile?spotifyToken=${profile.spotifyToken}`)
             .then(res => {setCurrentAuthor(res.data.id)})
-      }, [])
+    }, [])
 
     const getUserName = (ref) => {
         axios.get(`/profile/name?firestoreId=${ref}&spotifyToken=${profile.spotifyToken}`)
@@ -42,25 +52,7 @@ function Posts(props) {
             : (messageA.timeSent > messageB.timeSent ? 1 : 0);
     };
 
-    const flattenMessages = () => {
-        const flattened = [];
-        console.log(messages);
-        messages.forEach(m => {
-            flattened.push({
-                id: m.id,
-                author: m.data.author,
-                content: m.data.content,
-                timeSent: m.data.timeSent,
-                upvotes: m.data.upvotes
-            })
-        })
-        flattened.sort(sortByDate)
-        console.log(flattened);
-        return flattened;
-    }
-
     const upvote = (index) => {
-        console.log(messages[index])
         axios.put(url + '&id=' + messages[index].id, {
             content: messages[index].data.content,
             author: messages[index].data.author,
@@ -78,7 +70,6 @@ function Posts(props) {
     }
 
     const sendMessage = (content) => {
-        console.log(currentAuthor);
         axios.post(url, {
             content: content,
             author: currentAuthor,
@@ -89,10 +80,11 @@ function Posts(props) {
         .catch((err) => console.log(err))
         setChange(change + 1)
     }
+
     return (<div style={{alignItems: 'center'}}>
         <h1 style={{textAlign: 'center', color:"rgb(30,215,96)"}}>{forumName}</h1>
-        {<MessageBoard
-            messages={flattenMessages()}
+        {messages && <MessageBoard
+            messages={messages}
             deleteMessage={deleteMessage}
             editMessage={editMessage}
             sendMessage={sendMessage}

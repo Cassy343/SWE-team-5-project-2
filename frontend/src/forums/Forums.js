@@ -20,7 +20,6 @@ function Forums(props) {
     
 
     useEffect(() => {
-        console.log("reloading")
         fetch("http://localhost:8000/forums/")
         .then((res) => res.json())
         .then((text) => setForums(text.result))
