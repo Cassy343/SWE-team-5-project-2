@@ -63,7 +63,7 @@ display='inline' variant='h5'style={{fontWeight: 'bold', }}>{user.name ? user.na
                 <CardMedia
                       height='100'
                       component="img"
-                      image={user.topTrack ? user.topTrack.image.url: ''}
+                      image={user.topTrack ? user.topTrack.image.url: 'https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999'}
                       alt=''
                       sx={{borderRadius: '10%' ,display: 'inline', width: '6em', objectFit: 'cover'}}
                       />     
@@ -76,7 +76,7 @@ display='inline' variant='h5'style={{fontWeight: 'bold', }}>{user.name ? user.na
                 <CardMedia
                       height='100'
                       component="img"
-                      image={user.topArtist? user.topArtist.image.url: ''}
+                      image={user.topArtist? user.topArtist.image.url: 'https://rateds4superwoman.files.wordpress.com/2014/07/woman-question-mark.jpg'}
                       alt=''
                       sx={{borderRadius: '10%' , display: 'inline', width: '6em', objectFit: 'cover'}}
                       />   

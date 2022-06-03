@@ -5,10 +5,10 @@ const Artist = (props) => {
             sx={{m: 1.8}}
             onClick={props.onClick}           
             style={{
+                display: 'inline-block',
                 width: '325px', 
-                height: '325px', 
-                float: 'left' , 
-                padding: '10px', 
+                height: '325px',  
+                padding: '8px', 
                 backgroundColor: "SlateGrey", 
                 boxShadow: "0 12px 20px rgba(0,0,0,0.3)",
                 backgroundColor: props.green ? 'rgb(30,215,96)' : "SlateGrey",
