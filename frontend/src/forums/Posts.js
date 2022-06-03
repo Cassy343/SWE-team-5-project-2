@@ -40,7 +40,7 @@ function Posts(props) {
 
         axios.get(`/profile?spotifyToken=${profile.spotifyToken}`)
             .then(res => {setCurrentAuthor(res.data.id)})
-    }, [])
+    }, [change])
 
     const getUserName = (ref) => {
         axios.get(`/profile/name?firestoreId=${ref}&spotifyToken=${profile.spotifyToken}`)
@@ -69,16 +69,25 @@ function Posts(props) {
         // empty return for now
     }
 
-    const sendMessage = (content) => {
-        axios.post(url, {
+    const sendMessage = async (content) => {
+        setChange(change + 1); 
+        const currentTime = new Date()
+        const res = await axios.post(url, {
             content: content,
             author: currentAuthor,
-            timeSent: new Date(),
+            timeSent: currentTime,
             upvotes: 0
         })
-        .then((res) => {return([res.data])})
-        .catch((err) => console.log(err))
-        setChange(change + 1)
+        return {
+            author: {
+                name: profile.name,
+                id: profile.id
+            },
+            content: content,
+            timeSent: currentTime,
+            id: res.data.id
+        };
+        
     }
 
     return (<div style={{alignItems: 'center'}}>
