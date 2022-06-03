@@ -16,12 +16,15 @@ function Posts(props) {
 
     const location = useLocation();
     const forumName = location.state?.name;
-    const url = "http://localhost:8000/forums/messages?name=" + forumName
+    const url = "http://localhost:8000/forums/messages?name=" + forumName + '&spotifyToken=' + profile.spotifyToken
 
     useEffect(() => {
         fetch(url)
         .then((res) => res.json())
-        .then((text) => setMessages(text.result))
+        .then((text) => {
+            console.log(text);
+            setMessages(text.result)
+        })
         .catch((err) => console.log(err))
 
         axios.get(`/profile?spotifyToken=${profile.spotifyToken}`)

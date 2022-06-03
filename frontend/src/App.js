@@ -48,6 +48,8 @@ function App() {
         setToken(window.localStorage.getItem('token'));
     }, []);
 
+    const isProfileReady = () => profile.spotifyToken && profile.id;
+
     return (<ProfileContext.Provider value={profile}>
         <BrowserRouter
             className='App'
@@ -63,39 +65,39 @@ function App() {
                 >
                     <Route
                         path='/profile'
-                        element={profile.spotifyToken && <Profile spotifyToken={profile.spotifyToken} />}
+                        element={isProfileReady() && <Profile spotifyToken={profile.spotifyToken} />}
                     />
                     <Route
                         path='/discover'
-                        element={profile.spotifyToken && <Discover />}
+                        element={isProfileReady() && <Discover />}
                     />
                     <Route
                         path='/discover/publicprofile' 
-                        element = {profile.spotifyToken && <PublicProfile/>}         
+                        element = {isProfileReady() && <PublicProfile/>}         
                     />  
                     <Route
                         path='/liked-songs'
-                        element={profile.spotifyToken && <LikedSongs />}
+                        element={isProfileReady() && <LikedSongs />}
                     />
                     <Route
                         path='/top-songs'
-                        element={profile.spotifyToken && <TopSongs />}
+                        element={isProfileReady() && <TopSongs />}
                     />
                     <Route
                         path='/top-artists'
-                        element={profile.spotifyToken && <TopArtists />}
+                        element={isProfileReady() && <TopArtists />}
                     />
                     <Route
                         path='/forums'
-                        element={profile.spotifyToken && <Forums />}
+                        element={isProfileReady() && <Forums />}
                     />
                     <Route
                         path='/forums/posts'
-                        element={profile.spotifyToken && <Posts />}
+                        element={isProfileReady() && <Posts />}
                     />
                     <Route
                         path='/dms'
-                        element={profile.spotifyToken && <Dms />}
+                        element={isProfileReady() && <Dms />}
                     />
                 </Route>
             </Routes>

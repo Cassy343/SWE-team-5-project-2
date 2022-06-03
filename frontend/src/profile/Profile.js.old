@@ -1,0 +1,55 @@
+{/* <div className = "App">
+      <br></br>
+            <Box>
+              <Typography variant = "h3">{profile.name}</Typography>
+            </Box>
+            
+            <div>
+              <Grid container spacing = {2}>
+                <Grid item>
+                 <Grid container>
+                   <Grid item>
+                   <div className = "user_artists">
+                  <p>Artists</p>
+                    {artist.map((artist)=>
+                        <Box width={240}>
+                       <Card sx={{m: 2}}  style={{backgroundColor: "green", opacity: 0.9, boxShadow: "0 8px 10px rgba(0,0,0,0.3)",
+    "&:hover": {
+      boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}, padding: '5px', borderRadius: '2%'}}>
+                          <Typography variant="h5" color='black' textAlign='center' style={{fontWeight: "bold"}}>{artist.name}</Typography>
+                       </Card>  
+                       </Box>                    
+                    )}
+                  </div>
+                   </Grid>
+                   <Grid item>
+                   <div className = "user_songs">
+                  <p>Songs</p>
+                    {song.map((song)=>
+                        <Box width={240}>
+                       <Card sx={{m: 2}}  style={{backgroundColor: "green", opacity: 0.9, boxShadow: "0 8px 10px rgba(0,0,0,0.3)",
+    "&:hover": {
+      boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}, padding: '5px', borderRadius: '2%'}}>
+                          <Typography variant="h5" color='black' textAlign='center' style={{fontWeight: "bold"}}>{song.title}</Typography>
+                       </Card>  
+                       </Box>                    
+                    )}
+                  </div>
+                   </Grid>
+                 </Grid>
+                </Grid>
+                <Grid item xs={6} ms={6}>
+                    <FormControl>
+                        <FormLabel>
+                            <FormGroup>
+                                <FormControlLabel control = { <Android12Switch defaultChecked />} 
+                                label = "Private Profile" labelPlacement="top" onClick ={() => (privateProfile.private = !privateProfile.private)}/>
+                                {console.log(privateProfile)}
+                            </FormGroup>
+                        </FormLabel>
+                    </FormControl>
+                  </Grid>
+                </Grid>
+            </div>
+
+    </div> */}

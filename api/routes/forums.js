@@ -3,7 +3,26 @@ var router = express.Router();
 require('dotenv').config();
 const { db } = require('../db');
 const {doc, addDoc, getDocs, collection, query, where, updateDoc} = require("firebase/firestore")
+const { BASE_URL,
+    getSpotifyProfileFromToken,
+    getSpotifyProfileFromId,
+    getFirestoreProfileFromSpotifyId,
+    getFirestoreIdFromQuery,
+    getSpotifyIdFromFirestoreId } = require('../cache.js');
 
+const flattenMessageData = async (data, token) => {
+    const authorFirestoreId = data.author.id;
+    const authorSpotifyId = await getSpotifyIdFromFirestoreId(authorFirestoreId);
+    const authorSpotify = await getSpotifyProfileFromId(token, authorSpotifyId);
+
+    return {
+        ...data,
+        author: {
+            id: authorFirestoreId,
+            name: authorSpotify.name
+        }
+    };
+};
 
 router.get('/', async (req, res, next) => {
     const allDocs = [];
@@ -22,7 +41,6 @@ router.post('/', async (req, res, next) => {
 });
 
 router.get('/messages', async (req, res, next) => {
-    const allDocs = [];
     const q = query(
         collection(db, 'forums'), where('name', '==', req.query.name)
     );
@@ -30,9 +48,13 @@ router.get('/messages', async (req, res, next) => {
     const d = await getDocs(q).then(docs => docs.docs);
 
     const docs = await getDocs(collection(db, 'forums', d[0].id, 'messages'));
-    docs.forEach((doc) => {
-        allDocs.push({data: doc.data(), id: doc.id})
-    })
+    const allDocs = await Promise.all(docs.docs.map(async dc => {
+        const data = await flattenMessageData(dc.data(), req.query.spotifyToken);
+        return {
+            id: dc.id,
+            data: data
+        };
+    }));
     res.json({result: allDocs})
 });
 

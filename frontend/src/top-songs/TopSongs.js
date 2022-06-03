@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import {ProfileContext} from '../Context'
 import { useContext } from "react";
+import Song from "./Song";
 
 function TopSongs(props) {
     const [songsData, setSongsData] = useState([])
@@ -58,12 +59,9 @@ function TopSongs(props) {
                 const onProfile = profileSongs.filter(sid => song.id === sid).length > 0;
 
                 return (
-                    // <div onClick={() => (
-                    //     window.open(song.external_urls.spotify)
-                    // )}>
-                    <Card
-                        variant="elevation"
-                        sx={{m: 1.8}}
+                    <Song
+                        key={song.id}
+                        green={onProfile}
                         onClick={() => {
                             if (!onProfile) {
                                 const newProfileSongs = [...profileSongs, song.id];
@@ -73,47 +71,8 @@ function TopSongs(props) {
                                 setProfileSongs(newProfileSongs);
                             }
                         }}
-                        style={{
-                            width: '325px',
-                            height: '325px',
-                            float: 'left',
-                            padding: '10px',
-                            backgroundColor: onProfile ? 'rgb(30,215,96)' : "SlateGrey",
-                            cursor: onProfile ? 'auto' : 'pointer',
-                            boxShadow: "0 12px 20px rgba(0,0,0,0.3)",
-                            "&:hover": {
-                                boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
-                            }
-                        }}
-                    >
-                        <CardContent>
-                            <CardMedia
-                                component="img"
-                                height='240'
-                                width='200'
-                                image={song.album.images[1].url}
-                                alt='Album Cover Not Found'
-                            />
-                            <Typography 
-                                sx={{
-                                    overflow: 'hidden',
-                                    textOverflow: 'ellipsis',
-                                    display: '-webkit-box',
-                                    WebkitLineClamp: '1',
-                                    WebkitBoxOrient: 'vertical'
-                                }}
-                                display='inline'
-                                variant='h5'
-                                style={{ fontWeight: 'bold' }}
-                            >
-                                {song.name}
-                            </Typography>
-                            <Typography variant ='h6'>
-                                {song.album.artists[0].name}
-                            </Typography>     
-                        </CardContent>   
-                    </Card>
-                    // </div>
+                        song={song}
+                    />
                 );
             })}
             </Container>
