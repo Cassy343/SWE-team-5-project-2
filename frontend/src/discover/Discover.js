@@ -13,16 +13,14 @@ function Discover(props) {
     const [IdProfile, setIdProfile] = useState();
     const profile = useContext(ProfileContext)
     const user = profile.name
-    const [users, setUsers] = useState([{
-        user: {name: 'Arjun Patel',img: 'https://i.scdn.co/image/ab6775700000ee8533dadd02640bfc8c3beee444'},
-        song: {name: '4 The People', img: 'https://i.scdn.co/image/ab67616d00001e02108a66d13846ca9a2061f2d2' },
-        artist: {name: 'Lil Uzi Vert', img:'https://i.scdn.co/image/ab67616100005174879835ea4e3a0f0b8cf1c7b4' },
-        userId: '1235'
-    }]) // each user will contain name, top artist, top song, 
+    let x =[]
+    const [users, setUsers] = useState([]) // each user will contain name, top artist, top song, 
 
     useEffect(() => {
         axios.get(`profile/public?spotifyToken=${profile.spotifyToken}`)
-        .then(res => console.log(res.data))
+        .then(res => {x = res.data
+            setUsers(res.data)
+            console.log(users)})
     }, []);
 
 
@@ -43,44 +41,48 @@ return (
         <Container maxWidth='false' sx={{m: 2}} style={{ padding: '0px', overflow: 'auto'}}>
         {users.map((user) =>  (
             <div>
-            <Card variant="elevation" sx={{m: 1.8}} style={{width: '325px', height: '1000px', float: 'left' , padding: '10px', backgroundColor: "SlateGrey", boxShadow: "0 12px 20px rgba(0,0,0,0.3)",
+            <Card variant="elevation" sx={{m: 1.8}} style={{width: '325px', height: '410px', float: 'left' , padding: '10px', backgroundColor: "SlateGrey", boxShadow: "0 12px 20px rgba(0,0,0,0.3)",
             "&:hover": {
               boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}}}>
                    <CardActionArea component={Link} to="/discover/publicprofile" state={{id: user.userId}}>
                    <Typography align='center'   sx={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '1', WebkitBoxOrient: 'vertical', }}
-display='inline' variant='h5'style={{fontWeight: 'bold', }}>{user.user.name}</Typography>
+display='inline' variant='h5'style={{fontWeight: 'bold', }}>{user.name ? user.name: 'No Name Available'}</Typography>
                   <CardContent >
                       <CardMedia
                       height='200'
                       component="img"
-                      image={user.user.img}
+                      image={user.pfp ? user.pfp.url: 'https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg'}
                       alt='Album Cover Not Found'
-                      sx={{borderRadius: '50%', objectFit: 'contain', width: '200px', margin: 'auto'}}
+                      sx={{borderRadius: '50%', objectFit: 'cover', width: '200px', margin: 'auto'}}
 
                       />
-                <div display='flex' flexDirection='row'>
-                <Container style={{paddingLeft: '1px', display: 'inline',}}>
-                <Typography variant ='h6'>Top Song:</Typography>
+                <div style={{display: 'flex'}}>
+                <div style={{paddingLeft: '1px', display: 'inline', alignContent: 'center', paddingRight:'100px', textAlign: 'center'}}>
+                <Typography  sx={{textOverflow: 'ellipsis', display: 'inline', width: '9em', textAlign: 'center'}} variant ='h6'>Top Song:</Typography>
+                <br></br>
                 <CardMedia
                       height='100'
                       component="img"
-                      image={user.song.img}
-                      alt='Album Cover Not Found'
-                      sx={{borderRadius: '10%' ,display: 'inline', width: '40%',}}
-                      />            
-                <Typography  variant ='h6'>{user.song.name}</Typography>      
-                </Container>
-                <Container style={{paddingLeft: '1px', display: 'inline'}}>
-                <Typography variant ='h6'>Top Artist:</Typography>
+                      image={user.topTrack ? user.topTrack.image.url: ''}
+                      alt=''
+                      sx={{borderRadius: '10%' ,display: 'inline', width: '6em', objectFit: 'cover'}}
+                      />     
+                    <br></br>       
+                <Typography sx={{textOverflow: 'ellipsis', display: 'inline', width: '8em', textAlign: 'center'}}  variant ='h6'>{user.topTrack? user.topTrack.name: ''}</Typography>      
+                </div>
+                <div style={{paddingLeft: '1px', display: 'inline', textAlign: 'center'}}>
+                <Typography sx={{textOverflow: 'ellipsis', display: 'inline', width: '8em'}} variant ='h6'>Top Artist:</Typography>
+                <br></br>  
                 <CardMedia
                       height='100'
                       component="img"
-                      image={user.artist.img}
-                      alt='Album Cover Not Found'
-                      sx={{borderRadius: '10%' , width: '40%',}}
-                      />            
-                <Typography  variant ='h6'>{user.artist.name}</Typography>      
-                </Container>
+                      image={user.topArtist? user.topArtist.image.url: ''}
+                      alt=''
+                      sx={{borderRadius: '10%' , display: 'inline', width: '6em', objectFit: 'cover'}}
+                      />   
+                       <br></br>           
+                <Typography display='inline' sx={{textOverflow: 'ellipsis', display: 'inline', width: '40%'}} variant ='h6'>{user.topArtist? user.topArtist.name: ''}</Typography>      
+                </div>
                 </div>     
                 </CardContent>   
                 </CardActionArea>

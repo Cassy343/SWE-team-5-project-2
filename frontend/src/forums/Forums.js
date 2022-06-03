@@ -13,12 +13,10 @@ import Button from '@mui/material/Button';
 import {Helmet} from 'react-helmet';
 
 function Forums(props) {
-
-    const baseURL = 'http://localhost:8000';
-
     const [newForumName, setNewForumName] = useState("");
     const [newImageLink, setNewImageLink] = useState("https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/768px-Spotify_logo_without_text.svg.png");
     const [forums, setForums] = useState([]);
+    const [change, setChange] = useState(0);
     
 
     useEffect(() => {
@@ -27,7 +25,7 @@ function Forums(props) {
         .then((res) => res.json())
         .then((text) => setForums(text.result))
         .catch((err) => console.log(err))
-      }, [])
+      }, [change])
 
     const createForum = () => {
         axios.post("http://localhost:8000/forums/", {
@@ -36,11 +34,7 @@ function Forums(props) {
         })
         .then((res) => {setForums([...forums, res.data])})
         .catch((err) => console.log(err))
-
-    }
-
-    const getForumName = () => {
-        
+        setChange(change + 1)
     }
 
     return (<>
@@ -94,7 +88,7 @@ function Forums(props) {
                             {f.name}
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
-                            10 posts
+                            
                             </Typography>
                         </CardContent>
                     </CardActionArea>
