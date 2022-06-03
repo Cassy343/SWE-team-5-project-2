@@ -4,6 +4,7 @@ import axios from "axios";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import { Divider, Toolbar, Container } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
@@ -40,9 +41,13 @@ function Forums(props) {
     return (<>
         <Helmet><title>Forums</title></Helmet>
         <div style={{ textAlign: 'center', marginLeft: '70px', marginRight: '70px', }}>
-            <h1 style={{color:"rgb(30,215,96)"}}>FORUMS</h1>
+        <Toolbar variant='dense' style={{minHeight: '80px' }}>
+            <Container maxWidth='2000px' style={{ paddingLeft: '130px', display: "flex",}}>
+            <Typography style={{paddingLeft: '100px', textAlign: "center", padding: '10px', fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>Forums</Typography>
+            </Container>
+        </Toolbar>
+            <Divider></Divider>
             <Grid container spacing={4}>
-                <Grid item xs={2}><p></p></Grid>
                 <Grid item xs={2}><p><b>Create a new forum: </b></p></Grid>
                 <Grid item xs={2}>
                     <TextField fullWidth

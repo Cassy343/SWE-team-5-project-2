@@ -1,4 +1,4 @@
-import { Box, Button, Card, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, Stack, Typography, Toolbar, Container, Divider } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useReducer, useState } from "react";
 import { ProfileContext } from "../Context";
@@ -56,7 +56,15 @@ function Dms(props) {
         });
     }, []);
 
-    return (<Box id='dms-container'>
+    return (<div>
+        
+        <Toolbar variant='dense' style={{minHeight: '80px' }}>
+            <Container maxWidth='2000px' style={{ paddingLeft: '130px', display: "flex",}}>
+            <Typography style={{paddingLeft: '100px', textAlign: "center", padding: '10px', fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>Forums</Typography>
+            </Container>
+        </Toolbar>
+            <Divider></Divider>    
+    <Box id='dms-container'>
         <Box id='channel-select-container'>
             <Card id='channel-select'>
                 <Stack
@@ -109,7 +117,8 @@ function Dms(props) {
                 deleteMessage={() => {}}
             />
         }
-    </Box>);
+    </Box>
+    </div>);
 }
 
 export default Dms;

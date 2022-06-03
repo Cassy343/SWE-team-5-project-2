@@ -26,24 +26,9 @@ function LikedSongs(props) {
     }
 
     return (<div>
-        <Toolbar variant='dense' style={{padding: '0px', minHeight: '80px' }}>
-            <Container maxWidth='2000px' style={{padding: 'none', display: "flex",}}>
-            <Typography style={{textAlign: "center", padding: '10px', flex: 0.6, fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>{user}'s<br></br> Liked Songs</Typography>
-            <Button size='medium'  style={buttonStyle} variant='text'>
-            <Typography color ='black' variant='h5' hidden='true'>
-                                        All Time
-                                    </Typography>
-            </Button>
-            <Button size='small' variant='text' style={buttonStyle}>
-            <Typography color ='black' variant='h5' hidden='true'>
-                                        Last Year
-                                    </Typography>
-            </Button>
-            <Button size='small' style={buttonStyle} variant='text' >
-            <Typography color ='black' variant='h5' hidden='true'>
-                                        Last Month
-                                    </Typography>
-            </Button>
+        <Toolbar variant='dense' style={{minHeight: '80px' }}>
+            <Container maxWidth='2000px' style={{ paddingLeft: '130px',display: "flex",}}>
+            <Typography style={{ textAlign: "center", padding: '10px', fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>{profile.name}'s <br></br> Liked Songs</Typography>
             </Container>
         </Toolbar>
         <Divider ></Divider>

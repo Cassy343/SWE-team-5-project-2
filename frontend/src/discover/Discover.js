@@ -32,9 +32,9 @@ const buttonStyle = {
 }
 return (
     <div>
-        <Toolbar variant='dense' style={{padding: '0px', minHeight: '80px' }}>
-            <Container maxWidth='2000px' style={{padding: 'none', display: "flex",}}>
-            <Typography style={{textAlign: "center", padding: '10px', fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>Discover</Typography>
+        <Toolbar variant='dense' style={{minHeight: '80px' }}>
+            <Container maxWidth='2000px' style={{ paddingLeft: '130px', display: "flex",}}>
+            <Typography style={{paddingLeft: '100px', textAlign: "center", padding: '10px', fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>Discover</Typography>
             </Container>
         </Toolbar>
         <Divider ></Divider>

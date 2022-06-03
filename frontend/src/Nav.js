@@ -10,7 +10,7 @@ function Nav(props) {
     const links = [
         {
             to: "/profile",
-            label: "Profile"
+            label: "My Profile"
         },
         {
             to: "/liked-songs",
