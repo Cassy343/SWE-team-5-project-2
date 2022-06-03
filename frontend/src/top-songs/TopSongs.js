@@ -88,16 +88,29 @@ function TopSongs(props) {
                     >
                         <CardContent>
                             <CardMedia
-                            component="img"
-                            height='240'
-                            width='200'
-                            image={song.album.images[1].url}
-                            alt='Album Cover Not Found'
-
+                                component="img"
+                                height='240'
+                                width='200'
+                                image={song.album.images[1].url}
+                                alt='Album Cover Not Found'
                             />
-                        <Typography    sx={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '1', WebkitBoxOrient: 'vertical', }}
-    display='inline' variant='h5'style={{fontWeight: 'bold', }}>{song.name}</Typography>
-                        <Typography variant ='h6'>{song.album.artists[0].name}</Typography>     
+                            <Typography 
+                                sx={{
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: '1',
+                                    WebkitBoxOrient: 'vertical'
+                                }}
+                                display='inline'
+                                variant='h5'
+                                style={{ fontWeight: 'bold' }}
+                            >
+                                {song.name}
+                            </Typography>
+                            <Typography variant ='h6'>
+                                {song.album.artists[0].name}
+                            </Typography>     
                         </CardContent>   
                     </Card>
                     // </div>

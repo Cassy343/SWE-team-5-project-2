@@ -23,7 +23,7 @@ function Discover(props) {
     useEffect(() => {
         axios.get(`profile/public?spotifyToken=${profile.spotifyToken}`)
         .then(res => console.log(res.data))
-    });
+    }, []);
 
 
 

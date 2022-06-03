@@ -206,6 +206,15 @@ router.get('/public', (req, res) => {
     .catch(e => console.log(e));
 });
 
+router.get('/display-info', (req, res) => {
+    const token = req.query.spotifyToken;
+    const firestoreId = req.query.firestoreId;
+
+    const fetchInfo = async () => {
+        // const dc = getDoc(doc())
+    };
+});
+
 router.get('/top-songs', (req, res) => {
     axios.get(`${BASE_URL}/me/top/tracks${req.query.timeRange ? `?time_range=${req.query.timeRange}` : ''}`, {
         headers: {

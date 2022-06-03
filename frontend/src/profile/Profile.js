@@ -8,17 +8,11 @@ function Profile(props) {
   const [artist, setArtists] = useState([{name: "Imagine Dragons"},{name: "Ye"},{name: "Elton John"}]);
   const [song, setSongs] = useState([{title: "Enemy"}, {title: "Believer"}, {title: "Thunder"}]);
   const [privateProfile, setPrivateProfile] = useState({private: false});
-  const profile = useContext(ProfileContext)
+  const profile = useContext(ProfileContext);
   
-  //useEffect(()=> {
-   // .then(res => { 
-  //  });
-
- // },[]);
-    return (
-    <>
-        <div className = "App">
-            <br></br>
+  return (<>
+    <div className = "App">
+      <br></br>
             <Box>
               <Typography variant = "h3">{profile.name}</Typography>
             </Box>
@@ -71,46 +65,38 @@ function Profile(props) {
                 </Grid>
             </div>
 
-        </div>
-    
-    </>);
+    </div>
+  </>);
 }
+
 const Android12Switch = styled(Switch)(({ theme }) => ({
-    padding: 8,
-    
-    '& .MuiSwitch-track': {
-      borderRadius: 22 / 2,
-      '&:before, &:after': {
-        content: '""',
-        position: 'absolute',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        width: 16,
-        height: 16,
-      },
-      '&before':{
-      }
-     
-    },
-    '& .MuiSwitch-thumb': {
-      boxShadow: 'none',
+  padding: 8,
+  
+  '& .MuiSwitch-track': {
+    borderRadius: 22 / 2,
+    '&:before, &:after': {
+      content: '""',
+      position: 'absolute',
+      top: '50%',
+      transform: 'translateY(-50%)',
       width: 16,
-      //color: "rgb(30,215,96)",
-
       height: 16,
-      margin: 2,
     },
-  }));
+    '&before':{
+    }
+    
+  },
+  '& .MuiSwitch-thumb': {
+    boxShadow: 'none',
+    width: 16,
+    //color: "rgb(30,215,96)",
 
- const stringAvatar = (name) => {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-    };
-  }
-  const stringToColor = (string) => {
+    height: 16,
+    margin: 2,
+  },
+}));
+
+const stringToColor = (string) => {
   let hash = 0;
   let i;
 
@@ -128,4 +114,5 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
 
   return color;
 }
+
 export default Profile;
