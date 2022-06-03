@@ -92,14 +92,16 @@ function Posts(props) {
 
     return (<div style={{alignItems: 'center'}}>
         <h1 style={{textAlign: 'center', color:"rgb(30,215,96)"}}>{forumName}</h1>
-        {messages && <MessageBoard
-            messages={messages}
-            deleteMessage={deleteMessage}
-            editMessage={editMessage}
-            sendMessage={sendMessage}
-            getUserName={getUserName}
-            author={author}
-        ></MessageBoard>}
+        <div id='posts-container'>
+            {messages && <MessageBoard
+                messages={messages}
+                deleteMessage={deleteMessage}
+                editMessage={editMessage}
+                sendMessage={sendMessage}
+                getUserName={getUserName}
+                author={author}
+            ></MessageBoard>}
+        </div>
     </div>);
 }
 
