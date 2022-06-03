@@ -24,21 +24,29 @@ function Profile(props) {
     }, []);
   
     return (<>
-        <img src={displayData.pfp} alt='Profile Picture' />
+
+        <Typography variant='h1' style={{textAlign: "center", padding: '10px', fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}>{profile.name}</Typography>
+        <img style={{display: 'block',
+        margin: 'auto',
+        width: '300px',
+        height: '300px',
+        objectFit: 'cover',
+        borderRadius: '60%'
+        }}src={displayData.pfp} alt='Profile Picture' />
         <Box
             display='flex'
             flexDirection='row'
         >
             <Box
-                display='flex'
+                display='flex-left'
                 flexDirection='column'
                 alignItems='center'
                 width='50vw'
             >
-                <Typography variant='h2'>
+                <Typography align='center' style={{ color: "rgb(30,215,96)",}}variant='h2'>
                     Featured Songs
                 </Typography>
-                <Container sx={{m: 2}} style={{ padding: '0px', overflow: 'auto'}}>
+                <Container sx={{m: 2}} style={{ padding: '0px', overflow: 'auto', paddingLeft: '75px',}}>
                     {displayData.profileSongs.map((song) => {
                         return (
                             <Song
@@ -53,15 +61,15 @@ function Profile(props) {
                 </Container>
             </Box>
             <Box
-                display='flex'
+                display='flex-right'
                 flexDirection='column'
                 alignItems='center'
                 width='50vw'
             >
-                <Typography variant='h2'>
+                <Typography  align='center' style={{ color: "rgb(30,215,96)", }} variant='h2'>
                     Featured Artists
                 </Typography>
-                <Container sx={{m: 2}} style={{ padding: '0px', overflow: 'auto'}}>
+                <Container sx={{m: 2}} style={{ padding: '0px', overflow: 'auto', paddingLeft: '75px'}}>
                     {displayData.profileArtists.map((artist) => {
                         return (
                             <Artist
