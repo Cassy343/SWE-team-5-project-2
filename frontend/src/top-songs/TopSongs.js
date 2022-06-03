@@ -62,6 +62,7 @@ function TopSongs(props) {
                     <Song
                         key={song.id}
                         green={onProfile}
+                        clickable={!onProfile}
                         onClick={() => {
                             if (!onProfile) {
                                 const newProfileSongs = [...profileSongs, song.id];

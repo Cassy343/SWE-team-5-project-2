@@ -125,12 +125,18 @@ router.get('/display-info', (req, res) => {
                 }
             })).data;
         }));
-
-        console.log(songs, artists);
+        const spotifyProfile = (await axios.get(`${BASE_URL}/users/${dc.spotifyId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })).data;
 
         res.send({
             profileSongs: songs,
-            profileArtists: artists
+            profileArtists: artists,
+            pfp: spotifyProfile.images[0]
+                ? spotifyProfile.images[0].url
+                : 'https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg'
         });
     };
 

@@ -12,7 +12,7 @@ const Song = (props) => {
                 float: 'left',
                 padding: '10px',
                 backgroundColor: props.green ? 'rgb(30,215,96)' : "SlateGrey",
-                cursor: props.green ? 'auto' : 'pointer',
+                cursor: props.clickable ? 'pointer' : 'auto',
                 boxShadow: "0 12px 20px rgba(0,0,0,0.3)",
                 "&:hover": {
                     boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"

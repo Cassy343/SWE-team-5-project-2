@@ -4,6 +4,7 @@ import axios from "axios"
 import { ProfileContext } from "../Context"
 import { useState, useEffect, useContext } from "react";
 import Song from "../top-songs/Song";
+import Artist from "../top-artists/Artist";
 
 function Profile(props) {
     const [artist, setArtists] = useState([{name: "Imagine Dragons"},{name: "Ye"},{name: "Elton John"}]);
@@ -12,7 +13,8 @@ function Profile(props) {
     const profile = useContext(ProfileContext);
     const [displayData, setDisplayData] = useState({
         profileSongs: [],
-        profileArtists: []
+        profileArtists: [],
+        pfp: 'https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg'
     });
 
     useEffect(() => {
@@ -22,18 +24,58 @@ function Profile(props) {
     }, []);
   
     return (<>
-        <Container maxWidth='false' sx={{m: 2}} style={{ padding: '0px', overflow: 'auto'}}>
-            {displayData.profileSongs.map((song) => {
-                return (
-                    <Song
-                        key={song.id}
-                        green={false}
-                        onClick={() => {}}
-                        song={song}
-                    />
-                );
-            })}
-        </Container>
+        <img src={displayData.pfp} alt='Profile Picture' />
+        <Box
+            display='flex'
+            flexDirection='row'
+        >
+            <Box
+                display='flex'
+                flexDirection='column'
+                alignItems='center'
+                width='50vw'
+            >
+                <Typography variant='h2'>
+                    Featured Songs
+                </Typography>
+                <Container sx={{m: 2}} style={{ padding: '0px', overflow: 'auto'}}>
+                    {displayData.profileSongs.map((song) => {
+                        return (
+                            <Song
+                                key={song.id}
+                                green={false}
+                                clickable={false}
+                                onClick={() => {}}
+                                song={song}
+                            />
+                        );
+                    })}
+                </Container>
+            </Box>
+            <Box
+                display='flex'
+                flexDirection='column'
+                alignItems='center'
+                width='50vw'
+            >
+                <Typography variant='h2'>
+                    Featured Artists
+                </Typography>
+                <Container sx={{m: 2}} style={{ padding: '0px', overflow: 'auto'}}>
+                    {displayData.profileArtists.map((artist) => {
+                        return (
+                            <Artist
+                                key={artist.id}
+                                green={false}
+                                clickable={false}
+                                onClick={() => {}}
+                                artist={artist}
+                            />
+                        );
+                    })}
+                </Container>
+            </Box>
+        </Box>
     </>);
 }
 

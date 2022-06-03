@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import {ProfileContext} from '../Context'
 import { useContext } from "react";
+import Artist from "./Artist";
 
 
 function TopArtists(props) {
@@ -56,14 +57,12 @@ function TopArtists(props) {
         </Toolbar>
         <Divider ></Divider>
         <Container maxWidth='false' sx={{m: 2}} style={{ padding: '0px', overflow: 'auto'}}>
-        {artistsData.map((artist) =>  {
+        {artistsData.map((artist) => {
             const onProfile = profileArtists.filter(sid => artist.id === sid).length > 0;
-            // <div onClick={() => (
-            //     window.open(artist.external_urls.spotify)
-            // )}>
-            return(
-            <Card variant="elevation" 
-                sx={{m: 1.8}}
+
+            return (<Artist
+                key={artist.id}
+                artist={artist}
                 onClick={() => {
                     if (!onProfile) {
                         const newArtistSongs = [...profileArtists, artist.id];
@@ -72,35 +71,11 @@ function TopArtists(props) {
                         });
                         setProfileArtists(newArtistSongs);
                     }
-                }}           
-                style={{
-                    width: '325px', 
-                    height: '325px', 
-                    float: 'left' , 
-                    padding: '10px', 
-                    backgroundColor: "SlateGrey", 
-                    boxShadow: "0 12px 20px rgba(0,0,0,0.3)",
-                    backgroundColor: onProfile ? 'rgb(30,215,96)' : "SlateGrey",
-                    cursor: onProfile ? 'auto' : 'pointer',
-                    "&:hover": {
-                    boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}}}>
-                  <CardContent>
-                      <CardMedia
-                      component="img"
-                      height='240'
-                      width='200'
-                      image={artist.images[1].url}
-                      alt='Artist Picture Not Found'
-
-                      />
-                  <Typography    sx={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '1', WebkitBoxOrient: 'vertical', }}
-display='inline' variant='h5'style={{fontWeight: 'bold', }}>{artist.name}</Typography>
-                <Typography variant ='h6'>Followers: {artist.followers.total}</Typography>     
-                </CardContent>   
-            </Card>
-            // </div>
-            );
-})}
+                }}
+                green={onProfile}
+                clickable={!onProfile}
+            />)
+        })}
         </Container>
     </div>);
 }
