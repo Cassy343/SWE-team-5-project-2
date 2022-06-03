@@ -44,7 +44,7 @@ function Forums(props) {
         <div style={{ textAlign: 'center', marginLeft: '70px', marginRight: '70px', }}>
         <Toolbar variant='dense' style={{minHeight: '80px' }}>
             <Container maxWidth='2000px' style={{ paddingLeft: '130px', display: "flex",}}>
-            <Typography style={{paddingLeft: '100px', textAlign: "center", padding: '10px', fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>Forums</Typography>
+            <Typography style={{textAlign: "center", padding: '10px', fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>Forums</Typography>
             </Container>
         </Toolbar>
             <Divider></Divider>

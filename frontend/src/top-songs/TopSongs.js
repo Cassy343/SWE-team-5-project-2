@@ -7,6 +7,7 @@ import axios from "axios";
 import {ProfileContext} from '../Context'
 import { useContext } from "react";
 import Song from "./Song";
+import Helmet from "react-helmet";
 
 function TopSongs(props) {
     const [songsData, setSongsData] = useState([])
@@ -31,7 +32,8 @@ function TopSongs(props) {
         paddingInline: '50px',
         flex: .4,
     }
-    return (
+    return (<>
+        <Helmet><title>Top Songs</title></Helmet>
         <div>
             <Toolbar variant='dense' style={{padding: '0px', minHeight: '80px' }}>
                 <Container maxWidth='2000px' style={{padding: 'none', display: "flex",}}>
@@ -78,7 +80,7 @@ function TopSongs(props) {
             })}
             </Container>
         </div>
-    )
+    </>)
 
 
 

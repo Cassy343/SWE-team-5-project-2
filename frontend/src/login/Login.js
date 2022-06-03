@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { ProfileContext } from "../Context";
 import './login.css';
 import Logo from './big-spotify.png';
+import Helmet from "react-helmet";
 
 const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
 const RESPONSE_TYPE = 'token';
@@ -63,24 +64,27 @@ function Login(props) {
         return (<></>);
     }
 
-    return (<div id='login-container'>
-        <Card
-            id='button'
-            onClick={() => {
-                window.location.replace(
-                    `${AUTH_ENDPOINT}`
-                    + `?client_id=${process.env.REACT_APP_spotifyClientId}`
-                    + `&redirect_uri=${REDIRECT_URI}`
-                    + `&response_type=${RESPONSE_TYPE}`
-                    + `&scope=user-top-read%20user-library-read`
-                );
-            }}
-        >
-            <Typography variant='h2'>Login with Spotify</Typography>
-        </Card>
-        <div id='overlay'></div>
-        <img src={Logo} alt='' id='logo' />
-    </div>);
+    return (<>
+        <Helmet><title>Login</title></Helmet>
+        <div id='login-container'>
+            <Card
+                id='button'
+                onClick={() => {
+                    window.location.replace(
+                        `${AUTH_ENDPOINT}`
+                        + `?client_id=${process.env.REACT_APP_spotifyClientId}`
+                        + `&redirect_uri=${REDIRECT_URI}`
+                        + `&response_type=${RESPONSE_TYPE}`
+                        + `&scope=user-top-read%20user-library-read`
+                    );
+                }}
+            >
+                <Typography variant='h2'>Login with Spotify</Typography>
+            </Card>
+            <div id='overlay'></div>
+            <img src={Logo} alt='' id='logo' />
+        </div>
+    </>);
 }
 
 export default Login;

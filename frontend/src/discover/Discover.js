@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import {ProfileContext} from '../Context'
 import { useContext } from "react";
+import Helmet from "react-helmet";
 
 function Discover(props) {
     const [IdProfile, setIdProfile] = useState();
@@ -30,7 +31,8 @@ const buttonStyle = {
     paddingInline: '50px',
     flex: .4,
 }
-return (
+return (<>
+    <Helmet><title>Discover</title></Helmet>
     <div>
         <Toolbar variant='dense' style={{minHeight: '80px' }}>
             <Container maxWidth='2000px' style={{ paddingLeft: '130px', display: "flex",}}>
@@ -91,7 +93,7 @@ display='inline' variant='h5'style={{fontWeight: 'bold', }}>{user.name ? user.na
         ))}
         </Container>
     </div>
-)
+</>)
             }
 export default Discover;
 

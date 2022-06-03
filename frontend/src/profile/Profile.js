@@ -5,6 +5,7 @@ import { ProfileContext } from "../Context"
 import { useState, useEffect, useContext } from "react";
 import Song from "../top-songs/Song";
 import Artist from "../top-artists/Artist";
+import Helmet from "react-helmet";
 
 function Profile(props) {
     const [artist, setArtists] = useState([{name: "Imagine Dragons"},{name: "Ye"},{name: "Elton John"}]);
@@ -24,7 +25,7 @@ function Profile(props) {
     }, []);
   
     return (<>
-
+        <Helmet><title>My Profile</title></Helmet>
         <Typography variant='h1' style={{textAlign: "center", padding: '10px', fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}>{profile.name}</Typography>
         <img style={{display: 'block',
         margin: 'auto',

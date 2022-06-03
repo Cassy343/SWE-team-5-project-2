@@ -7,6 +7,7 @@ import axios from "axios";
 import {ProfileContext} from '../Context'
 import { useContext } from "react";
 import Artist from "./Artist";
+import Helmet from "react-helmet";
 
 
 function TopArtists(props) {
@@ -34,7 +35,9 @@ function TopArtists(props) {
         flex: .4,
     }
 
-    return (        <div>
+    return (<>
+        <Helmet><title>Top Artists</title></Helmet>
+        <div>
         <Toolbar variant='dense' style={{padding: '0px', minHeight: '80px' }}>
             <Container maxWidth='2000px' style={{padding: 'none', display: "flex",}}>
             <Typography style={{textAlign: "center", padding: '10px', flex: 0.6, fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>{user}'s<br></br> Top Artists</Typography>
@@ -77,7 +80,8 @@ function TopArtists(props) {
             />)
         })}
         </Container>
-    </div>);
+    </div>
+    </>);
 }
 
 export default TopArtists;

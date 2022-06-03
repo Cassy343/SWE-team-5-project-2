@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import {ProfileContext} from '../Context'
 import { useContext } from "react";
+import Helmet from "react-helmet";
 
 function LikedSongs(props) {
     const[songsData, setSongsData] = useState([])
@@ -25,7 +26,9 @@ function LikedSongs(props) {
         flex: .4,
     }
 
-    return (<div>
+    return (<>
+    <Helmet><title>Liked Songs</title></Helmet>
+    <div>
         <Toolbar variant='dense' style={{minHeight: '80px' }}>
             <Container maxWidth='2000px' style={{ paddingLeft: '130px',display: "flex",}}>
             <Typography style={{ textAlign: "center", padding: '10px', fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>{profile.name}'s <br></br> Liked Songs</Typography>
@@ -58,6 +61,7 @@ display='inline' variant='h5'style={{fontWeight: 'bold', }}>{song.track.name}</T
         ))}
         </Container>
     </div>
+    </>
     );
 }
 

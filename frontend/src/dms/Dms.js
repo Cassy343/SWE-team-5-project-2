@@ -1,6 +1,7 @@
 import { Box, Button, Card, Stack, Typography, Toolbar, Container, Divider } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useReducer, useState } from "react";
+import Helmet from "react-helmet";
 import { ProfileContext } from "../Context";
 import MessageBoard from "../message-board/MessageBoard";
 import './dms.css';
@@ -56,11 +57,12 @@ function Dms(props) {
         });
     }, []);
 
-    return (<div>
-        
+    return (<>
+    <Helmet><title>DMs</title></Helmet>
+    <div>
         <Toolbar variant='dense' style={{minHeight: '80px' }}>
             <Container maxWidth='2000px' style={{ paddingLeft: '130px', display: "flex",}}>
-            <Typography style={{paddingLeft: '100px', textAlign: "center", padding: '10px', fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>Forums</Typography>
+            <Typography style={{paddingLeft: '100px', textAlign: "center", padding: '10px', fontWeight: 'bold', color: "rgb(30,215,96)", letterSpacing: '4px'}}variant='h4'>DMs</Typography>
             </Container>
         </Toolbar>
             <Divider></Divider>    
@@ -118,7 +120,8 @@ function Dms(props) {
             />
         }
     </Box>
-    </div>);
+    </div>
+    </>);
 }
 
 export default Dms;
