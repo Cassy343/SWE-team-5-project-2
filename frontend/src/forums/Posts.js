@@ -13,6 +13,7 @@ function Posts(props) {
     const [author, setAuthor] = useState("");
     const profile = useContext(ProfileContext);
     const [currentAuthor, setCurrentAuthor] = useState();
+    const [change, setChange] = useState(0);
 
     const location = useLocation();
     const forumName = location.state?.name;
@@ -31,6 +32,28 @@ function Posts(props) {
     const getUserName = (ref) => {
         axios.get(`/profile/name?firestoreId=${ref}&spotifyToken=${profile.spotifyToken}`)
             .then(res => {setAuthor(res.data.name)})
+    }
+    const sortByDate = (messageA, messageB) => {
+        return messageA.timeSent < messageB.timeSent
+            ? -1
+            : (messageA.timeSent > messageB.timeSent ? 1 : 0);
+    };
+
+    const flattenMessages = () => {
+        const flattened = [];
+        console.log(messages);
+        messages.forEach(m => {
+            flattened.push({
+                id: m.id,
+                author: m.data.author,
+                content: m.data.content,
+                timeSent: m.data.timeSent,
+                upvotes: m.data.upvotes
+            })
+        })
+        flattened.sort(sortByDate)
+        console.log(flattened);
+        return flattened;
     }
 
     const upvote = (index) => {
@@ -61,12 +84,12 @@ function Posts(props) {
         })
         .then((res) => {return([res.data])})
         .catch((err) => console.log(err))
+        setChange(change + 1)
     }
-
     return (<div style={{alignItems: 'center'}}>
         <h1 style={{textAlign: 'center', color:"rgb(30,215,96)"}}>{forumName}</h1>
         {<MessageBoard
-            messages={messages}
+            messages={flattenMessages()}
             deleteMessage={deleteMessage}
             editMessage={editMessage}
             sendMessage={sendMessage}
