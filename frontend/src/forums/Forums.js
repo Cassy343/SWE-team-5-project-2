@@ -26,14 +26,15 @@ function Forums(props) {
         .catch((err) => console.log(err))
       }, [change])
 
-    const createForum = () => {
-        axios.post("http://localhost:8000/forums/", {
+    const createForum = async () => {
+        
+        const res = await axios.post("http://localhost:8000/forums/", {
             name: newForumName,
             imageLink: newImageLink
         })
-        .then((res) => {setForums([...forums, res.data])})
-        .catch((err) => console.log(err))
-        setChange(change + 1)
+        setForums([...forums, res.data]);
+        setChange(change + 1);
+        
     }
 
     return (<>
